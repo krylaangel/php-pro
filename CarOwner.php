@@ -2,24 +2,20 @@
 
 class CarOwner
 {
-    protected ValidationController $validator;
+    protected Validator $validator;
     private string $fullName;
     protected array $vehicleInfo = [];
     private int $contactNumber;
 
+
     /**
      * @throws Exception
      */
-    public function __construct(string $fullName, int $contactNumber)
+    public function __construct(string $fullName, int $contactNumber, Validator $validator)
     {
-        $this->validator = new ValidationController();
+        $this->validator = $validator;
         $this->setFullName($fullName);
         $this->setContactNumber($contactNumber);
-    }
-
-    public function addVehicle(Vehicle $vehicleInfo): void
-    {
-        $this->vehicleInfo[] = $vehicleInfo;
     }
 
     public function writeOwnerInfo(string $filenameCarOwner): void
@@ -31,6 +27,23 @@ class CarOwner
 
         $json_data = json_encode($ownerInfo, JSON_PRETTY_PRINT);
         file_put_contents($filenameCarOwner, $json_data);
+    }
+
+    public function findCars(): void
+    {
+        foreach ($this->getVehicleInfo() as $vehicleInfo) {
+            if ($vehicleInfo instanceof Car) {
+                echo "<pre>";
+                var_dump('Owner car is: ' . $this->getFullName() . "\n");
+                var_dump($vehicleInfo->getInformation());
+                echo "</pre>";
+            }
+        }
+    }
+
+    public function addVehicle(Vehicle $vehicleInfo): void
+    {
+        $this->vehicleInfo[] = $vehicleInfo;
     }
 
     public function getVehicleInfo(): array

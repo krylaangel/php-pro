@@ -7,9 +7,9 @@ class Car extends Vehicle
     protected array $spareParts = [];
 
 
-    public function __construct(string $vehicleLicensePlate, int $yearVehicleManufacture, string $brandVehicle, string $bodyType)
+    public function __construct(string $licensePlate, int $yearManufacture, string $brand, string $bodyType, Validator $validator)
     {
-        parent::__construct($vehicleLicensePlate, $yearVehicleManufacture, $brandVehicle);
+        parent::__construct($licensePlate, $yearManufacture, $brand, $validator);
         $this->setBodyType($bodyType);
 
     }
@@ -30,27 +30,27 @@ class Car extends Vehicle
         }
     }
 
-    public function getData(): array
+    public function getInformation(): array
     {
-        $data = parent::getData();
+        $data = parent::getInformation();
         $data['Body Type'] = $this->getBodyType();
         return $data;
 
     }
 
-    public function writeInfoVehicleEquipment(string $filenameCareInfo): void
+    public function writeInfoEquipment(string $filename): void
     {
         $existingDataCar = [];
-        if (file_exists($filenameCareInfo)) {
-            $existingDataCar = json_decode(file_get_contents($filenameCareInfo), true);
+        if (file_exists($filename)) {
+            $existingDataCar = json_decode(file_get_contents($filename), true);
         }
         $existingDataCar[] = [
-            'Vehicle' => $this->getData(),
+            'Vehicle' => $this->getInformation(),
             'SpareParts' => $this->getAllSpareParts()
         ];
         $json_data = json_encode($existingDataCar, JSON_PRETTY_PRINT);
         $json_data .= PHP_EOL;
-        file_put_contents($filenameCareInfo, $json_data);
+        file_put_contents($filename, $json_data);
     }
     /**
      * @param mixed $vehicleLicensePlate
@@ -69,9 +69,5 @@ class Car extends Vehicle
     public function setBodyType(string $bodyType): void
     {
         $this->bodyType = $bodyType;
-    }
-
-    public function getDataFormatted()
-    {
     }
 }

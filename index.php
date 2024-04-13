@@ -1,50 +1,39 @@
 <?php
-define('APP_DIR', __DIR__ . '/');
-
+require_once __DIR__ . '/constants.php';
 require_once APP_DIR . 'Vehicle.php';
 require_once APP_DIR . 'Car.php';
 require_once APP_DIR . 'SparePart.php';
-require_once APP_DIR . 'ValidationController.php';
+require_once APP_DIR . 'Validator.php';
 require_once APP_DIR . 'CarOwner.php';
 
 
 try {
-    $filenameCareInfo = 'car_info.json';
-    $filenameCarOwner = 'car_owner.json';
 
-    $car = new Car('GHI789', 2017, 'Chevrolet', 'Sedan');
+    $car = new Car('GHI789', 2017, 'Chevrolet', 'Sedan', new Validator());
     $car->addSparePart(new SparePart('Engine Oil', 'Some Model', 50));
     $car->addSparePart(new SparePart('Brake Pads', 'Another Model', 100));
-    $FirstAllSparePartsInfo = $car->getAllSpareParts();
+    $firstAllSparePartsInfo = $car->getAllSpareParts();
 
 
-    $anotherCar = new Car('ABC123', 2019, 'Toyota', 'SUV');
+    $anotherCar = new Car('ABC123', 2019, 'Toyota', 'SUV', new Validator());
     $anotherCar->addSparePart(new SparePart('Brake Pads', 'Another Model', 200));
-    $SecondAllSparePartsInfo = $anotherCar->getAllSpareParts();
+    $secondAllSparePartsInfo = $anotherCar->getAllSpareParts();
 
-    $carOwner = new CarOwner('John Doe', 389876543210);
+    $carOwner = new CarOwner('John Doe', 389876543210, new Validator());
     $carOwner->addVehicle($anotherCar);
-    $carOwner->writeOwnerInfo($filenameCarOwner);
+    $carOwner->addVehicle($car);
 
-    $allCarsInfo = array($car->getData(), $anotherCar->getData());
-    $anotherCar->writeInfoVehicleEquipment($filenameCareInfo);
-    $car->writeInfoVehicleEquipment($filenameCareInfo);
+    $carOwner->writeOwnerInfo(CAR_OWNER_JSON);
 
-// цикл, що шукає власника авто
-    foreach ($carOwner->getVehicleInfo() as $vehicleInfo) {
-        if ($vehicleInfo instanceof Car) {
-            echo "<pre>";
-            var_dump('Owner car is: ' . $carOwner->getFullName() . "\n");
-            var_dump($vehicleInfo->getData());
-            echo "</pre>";
-        }
-    }
+    $allCarsInfo = array($car->getInformation(), $anotherCar->getInformation());
+    $anotherCar->writeInfoEquipment(CAR_INFO_JSON);
+    $car->writeInfoEquipment(CAR_INFO_JSON);
+
+    $carOwner->findCars();
 
     echo "<pre>";
     print_r($anotherCar);
     print_r($car);
-//    print_r($carOwner); вивід інфо про власника, його авто та запчастини до авто
-
     echo "</pre>";
 
 

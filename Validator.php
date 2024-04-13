@@ -1,6 +1,6 @@
 <?php
 
-class ValidationController
+class Validator
 {
     public function validateNamePart($namePart)
     {

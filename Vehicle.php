@@ -2,28 +2,31 @@
 
 abstract class Vehicle
 {
-    protected ValidationController $validator;
-    protected string $vehicleLicensePlate;
-    protected int $yearVehicleManufacture;
-    protected string $brandVehicle;
+    protected Validator $validator;
+    protected string $licensePlate;
+    protected int $yearManufacture;
+    protected string $brand;
 
-    public function __construct(string $vehicleLicensePlate, int $yearVehicleManufacture, string $brandVehicle)
+    /**
+     * @throws Exception
+     */
+    public function __construct(string $licensePlate, int $yearManufacture, string $brand, Validator $validator)
     {
-        $this->validator = new ValidationController();
-        $this->setVehicleLicensePlate($vehicleLicensePlate);
-        $this->setYearVehicleManufacture($yearVehicleManufacture);
-        $this->setBrandVehicle($brandVehicle);
+        $this->validator = $validator;
+        $this->setLicensePlate($licensePlate);
+        $this->setYearManufacture($yearManufacture);
+        $this->setBrand($brand);
     }
 
     /**
      * @return array
      */
-    public function getData(): array
+    public function getInformation(): array
     {
         return [
-            'License Plate' => $this->getVehicleLicensePlate(),
-            'Year of Manufacture' => $this->getYearVehicleManufacture(),
-            'Brand' => $this->getBrandVehicle()
+            'License Plate' => $this->getLicensePlate(),
+            'Year of Manufacture' => $this->getYearManufacture(),
+            'Brand' => $this->getBrand()
         ];
 
     }
@@ -32,58 +35,61 @@ abstract class Vehicle
 
     abstract public function getAllSpareParts();
 
-    abstract public function writeInfoVehicleEquipment(string $filename): void;
+    abstract public function writeInfoEquipment(string $filename): void;
 
     /**
      * @return mixed
      */
-    public function getVehicleLicensePlate(): string
+    public function getLicensePlate(): string
     {
-        return $this->vehicleLicensePlate;
+        return $this->licensePlate;
     }
 
     /**
-     * @param mixed $vehicleLicensePlate
+     * @param mixed $licensePlate
+     * @throws Exception
      */
-    public function setVehicleLicensePlate(string $vehicleLicensePlate): void
+    public function setLicensePlate(string $licensePlate): void
     {
-        $this->validator->validateCharacterCount($vehicleLicensePlate, 4);
-        $this->vehicleLicensePlate = $vehicleLicensePlate;
+        $this->validator->validateCharacterCount($licensePlate, 4);
+        $this->licensePlate = $licensePlate;
 
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getYearVehicleManufacture(): int
-    {
-        return $this->yearVehicleManufacture;
-    }
-
-    /**
-     * @param mixed $yearVehicleManufacture
-     */
-    public function setYearVehicleManufacture(int $yearVehicleManufacture): void
-    {
-        $this->validator->validateCharacterCount($yearVehicleManufacture, 4);
-        $this->yearVehicleManufacture = $yearVehicleManufacture;
     }
 
     /**
      * @return mixed
      */
-    public function getBrandVehicle(): string
+    public function getYearManufacture(): int
     {
-        return $this->brandVehicle;
+        return $this->yearManufacture;
     }
 
     /**
-     * @param mixed $brandVehicle
+     * @param mixed $yearManufacture
+     * @throws Exception
      */
-    public function setBrandVehicle(string $brandVehicle): void
+    public function setYearManufacture(int $yearManufacture): void
     {
-        $this->validator->validateNamePart($brandVehicle);
-        $this->validator->validateCharacterCount($brandVehicle, 3);
-        $this->brandVehicle = $brandVehicle;
+        $this->validator->validateCharacterCount($yearManufacture, 4);
+        $this->yearManufacture = $yearManufacture;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBrand(): string
+    {
+        return $this->brand;
+    }
+
+    /**
+     * @param mixed $brand
+     * @throws Exception
+     */
+    public function setBrand(string $brand): void
+    {
+        $this->validator->validateNamePart($brand);
+        $this->validator->validateCharacterCount($brand, 3);
+        $this->brand = $brand;
     }
 }
