@@ -14,7 +14,6 @@ try {
     $car->addSparePart(new SparePart('Brake Pads', 'Another Model', 100));
     $firstAllSparePartsInfo = $car->getAllSpareParts();
 
-
     $anotherCar = new Car('ABC123', 2019, 'Toyota', 'SUV', new Validator());
     $anotherCar->addSparePart(new SparePart('Brake Pads', 'Another Model', 200));
     $secondAllSparePartsInfo = $anotherCar->getAllSpareParts();
@@ -29,7 +28,7 @@ try {
     $anotherCar->writeInfoEquipment(CAR_INFO_JSON);
     $car->writeInfoEquipment(CAR_INFO_JSON);
 
-    $carOwner->findCars();
+    $carOwner->displayOwnedCarsInfo();
 
     echo "<pre>";
     print_r($anotherCar);

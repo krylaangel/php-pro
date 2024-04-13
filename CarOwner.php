@@ -29,7 +29,7 @@ class CarOwner
         file_put_contents($filenameCarOwner, $json_data);
     }
 
-    public function findCars(): void
+    public function displayOwnedCarsInfo(): void
     {
         foreach ($this->getVehicleInfo() as $vehicleInfo) {
             if ($vehicleInfo instanceof Car) {
