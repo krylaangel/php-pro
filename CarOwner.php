@@ -49,7 +49,7 @@ class CarOwner
     /**
      * записывает в файл инфо, полученную из метода findOwnerCars и возвращает ошибки
      */
-    public function displayOwnerCarsInfo(): void
+    public function writeOwnerCarsInfo(): void
     {
         $jsonString = json_encode($this->findOwnerCars(), JSON_PRETTY_PRINT);
         if ($jsonString !== false) {
