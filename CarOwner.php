@@ -29,15 +29,36 @@ class CarOwner
         file_put_contents($filenameCarOwner, $json_data);
     }
 
-    public function displayOwnedCarsInfo(): void
+// находит только машины определенного владельца, создает массив
+
+    public function findOwnerCars(): array
     {
+        $findOwner = $this->getFullName();
+        $findCar = [];
         foreach ($this->getVehicleInfo() as $vehicleInfo) {
             if ($vehicleInfo instanceof Car) {
-                echo "<pre>";
-                var_dump('Owner car is: ' . $this->getFullName() . "\n");
-                var_dump($vehicleInfo->getInformation());
-                echo "</pre>";
+                $findCar[] = $vehicleInfo->getInformation();
             }
+        }
+        return [
+            'Owner' => $findOwner,
+            'Cars' => $findCar
+        ];
+    }
+
+    /**
+     * записывает в файл инфо, полученную из метода findOwnerCars и возвращает ошибки
+     */
+    public function displayOwnerCarsInfo(): void
+    {
+        $jsonString = json_encode($this->findOwnerCars(), JSON_PRETTY_PRINT);
+        if ($jsonString !== false) {
+            $result = file_put_contents(OWNER_CARS_INFO, $jsonString);
+            if ($result === false) {
+                throw new Exception("Ошибка при записи в файл: OWNER_CARS_INFO;");
+            }
+        } else {
+            throw new Exception("Ошибка кодирования JSON");
         }
     }
 

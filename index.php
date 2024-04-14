@@ -28,12 +28,7 @@ try {
     $anotherCar->writeInfoEquipment(CAR_INFO_JSON);
     $car->writeInfoEquipment(CAR_INFO_JSON);
 
-    $carOwner->displayOwnedCarsInfo();
-
-    echo "<pre>";
-    print_r($anotherCar);
-    print_r($car);
-    echo "</pre>";
+    $carOwner->displayOwnerCarsInfo(); //поиск всех авто определенного владельца
 
 
 } catch (Exception $e) {
