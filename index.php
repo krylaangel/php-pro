@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/paths_constants.php';
 require_once APP_DIR . 'Vehicle.php';
 require_once APP_DIR . 'Car.php';
 require_once APP_DIR . 'SparePart.php';
