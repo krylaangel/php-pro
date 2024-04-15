@@ -48,7 +48,6 @@ class CarOwner
 
     /**
      * записывает в файл инфо, полученную из метода findOwnerCars и возвращает ошибки
-     * @throws Exception
      */
     public function writeOwnerCarsInfo(): void
     {
@@ -73,17 +72,11 @@ class CarOwner
         return $this->vehicleInfo;
     }
 
-    /**
-     * @return string
-     */
     public function getFullName(): string
     {
         return $this->fullName;
     }
 
-    /**
-     * @param string $fullName
-     */
     public function setFullName(string $fullName): void
     {
         $this->validator->validateCharacterCount($fullName, 2);
@@ -91,9 +84,6 @@ class CarOwner
         $this->fullName = $fullName;
     }
 
-    /**
-     * @return int
-     */
     public function getContactNumber(): int
     {
         return $this->contactNumber;

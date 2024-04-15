@@ -59,20 +59,12 @@ class Car extends Vehicle
         $json_data .= PHP_EOL;
         file_put_contents($filename, $json_data);
     }
-    /**
-     * @param mixed $vehicleLicensePlate
-     */
-    /**
-     * @return string
-     */
+
     public function getBodyType(): string
     {
         return $this->bodyType;
     }
 
-    /**
-     * @param string $bodyType
-     */
     public function setBodyType(string $bodyType): void
     {
         $this->bodyType = $bodyType;

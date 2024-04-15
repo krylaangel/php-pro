@@ -8,9 +8,6 @@ use Exception;
 
 class Validator
 {
-    /**
-     * @throws Exception
-     */
     public function validateNamePart($namePart)
     {
         if (!empty($namePart) && preg_match('/^[a-zA-Z\s]+$/', $namePart)) {

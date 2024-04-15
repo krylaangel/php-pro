@@ -20,9 +20,6 @@ abstract class Vehicle
         $this->setBrand($brand);
     }
 
-    /**
-     * @return array
-     */
     public function getInformation(): array
     {
         return [
@@ -38,51 +35,33 @@ abstract class Vehicle
 
     abstract public function writeInfoEquipment(string $filename): void;
 
-    /**
-     * @return mixed
-     */
     public function getLicensePlate(): string
     {
         return $this->licensePlate;
     }
 
-    /**
-     * @param mixed $licensePlate
-     */
     public function setLicensePlate(string $licensePlate): void
     {
         $this->validator->validateCharacterCount($licensePlate, 4);
         $this->licensePlate = $licensePlate;
     }
 
-    /**
-     * @return mixed
-     */
     public function getYearManufacture(): int
     {
         return $this->yearManufacture;
     }
 
-    /**
-     * @param mixed $yearManufacture
-     */
     public function setYearManufacture(int $yearManufacture): void
     {
         $this->validator->validateCharacterCount($yearManufacture, 4);
         $this->yearManufacture = $yearManufacture;
     }
 
-    /**
-     * @return mixed
-     */
     public function getBrand(): string
     {
         return $this->brand;
     }
 
-    /**
-     * @param mixed $brand
-     */
     public function setBrand(string $brand): void
     {
         $this->validator->validateNamePart($brand);
