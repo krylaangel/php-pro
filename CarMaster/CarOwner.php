@@ -1,5 +1,7 @@
 <?php
+declare(strict_types=1);
 
+namespace CarMaster;
 class CarOwner
 {
     protected Validator $validator;
@@ -7,10 +9,6 @@ class CarOwner
     protected array $vehicleInfo = [];
     private int $contactNumber;
 
-
-    /**
-     * @throws Exception
-     */
     public function __construct(string $fullName, int $contactNumber, Validator $validator)
     {
         $this->validator = $validator;
@@ -48,6 +46,7 @@ class CarOwner
 
     /**
      * записывает в файл инфо, полученную из метода findOwnerCars и возвращает ошибки
+     * @throws Exception
      */
     public function writeOwnerCarsInfo(): void
     {
@@ -82,7 +81,6 @@ class CarOwner
 
     /**
      * @param string $fullName
-     * @throws Exception
      */
     public function setFullName(string $fullName): void
     {
@@ -99,10 +97,6 @@ class CarOwner
         return $this->contactNumber;
     }
 
-    /**
-     * @param int $contactNumber
-     * @throws Exception
-     */
     public function setContactNumber(int $contactNumber): void
     {
         $this->validator->validateCharacterCount($contactNumber, 12);

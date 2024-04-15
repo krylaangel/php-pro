@@ -1,15 +1,19 @@
 <?php
-require_once __DIR__ . '/paths_constants.php';
-require_once APP_DIR . 'Vehicle.php';
-require_once APP_DIR . 'Car.php';
-require_once APP_DIR . 'SparePart.php';
-require_once APP_DIR . 'Validator.php';
-require_once APP_DIR . 'CarOwner.php';
+declare(strict_types=1);
+require_once 'autoloader.php';
+
+use CarMaster\Car;
+use CarMaster\SparePart;
+use CarMaster\Validator;
+use CarMaster\CarOwner;
+use const CarMaster\CAR_INFO_JSON;
+use const CarMaster\CAR_OWNER_JSON;
+//use const CarMaster\OWNER_CARS_INFO;
 
 
 try {
 
-    $car = new Car('GHI789', 2017, 'Chevrolet', 'Sedan', new Validator());
+    $car = new Car('Chevrolet', 2017, 'Chevrolet', 'Sedan', new Validator());
     $car->addSparePart(new SparePart('Engine Oil', 'Some Model', 50));
     $car->addSparePart(new SparePart('Brake Pads', 'Another Model', 100));
     $firstAllSparePartsInfo = $car->getAllSpareParts();

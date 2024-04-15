@@ -1,15 +1,16 @@
 <?php
+declare(strict_types=1);
+
+namespace CarMaster;
 
 abstract class Vehicle
+
 {
     protected Validator $validator;
     protected string $licensePlate;
     protected int $yearManufacture;
     protected string $brand;
 
-    /**
-     * @throws Exception
-     */
     public function __construct(string $licensePlate, int $yearManufacture, string $brand, Validator $validator)
     {
         $this->validator = $validator;
@@ -47,7 +48,6 @@ abstract class Vehicle
 
     /**
      * @param mixed $licensePlate
-     * @throws Exception
      */
     public function setLicensePlate(string $licensePlate): void
     {
@@ -66,7 +66,6 @@ abstract class Vehicle
 
     /**
      * @param mixed $yearManufacture
-     * @throws Exception
      */
     public function setYearManufacture(int $yearManufacture): void
     {
@@ -84,7 +83,6 @@ abstract class Vehicle
 
     /**
      * @param mixed $brand
-     * @throws Exception
      */
     public function setBrand(string $brand): void
     {
