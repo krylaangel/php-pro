@@ -11,9 +11,6 @@ use CarMaster\CarOwner;
 use const CarMaster\CAR_INFO_JSON;
 use const CarMaster\CAR_OWNER_JSON;
 
-//use const CarMaster\OWNER_CARS_INFO;
-
-
 try {
     $car = new Car('Chevrolet', 2017, 'Chevrolet', 'Sedan', new Validator());
     $car->addSparePart(new SparePart('Engine Oil', 'Some Model', 50));
