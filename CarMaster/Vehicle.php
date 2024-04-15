@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CarMaster;
@@ -29,7 +30,6 @@ abstract class Vehicle
             'Year of Manufacture' => $this->getYearManufacture(),
             'Brand' => $this->getBrand()
         ];
-
     }
 
     abstract public function addSparePart(SparePart $partInfo);
@@ -53,7 +53,6 @@ abstract class Vehicle
     {
         $this->validator->validateCharacterCount($licensePlate, 4);
         $this->licensePlate = $licensePlate;
-
     }
 
     /**

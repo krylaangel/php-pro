@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CarMaster;
@@ -10,11 +11,15 @@ class Car extends Vehicle
     protected array $spareParts = [];
 
 
-    public function __construct(string $licensePlate, int $yearManufacture, string $brand, string $bodyType, Validator $validator)
-    {
+    public function __construct(
+        string $licensePlate,
+        int $yearManufacture,
+        string $brand,
+        string $bodyType,
+        Validator $validator
+    ) {
         parent::__construct($licensePlate, $yearManufacture, $brand, $validator);
         $this->setBodyType($bodyType);
-
     }
 
     public function addSparePart(SparePart $partInfo): void
@@ -38,7 +43,6 @@ class Car extends Vehicle
         $data = parent::getInformation();
         $data['Body Type'] = $this->getBodyType();
         return $data;
-
     }
 
     public function writeInfoEquipment(string $filename): void

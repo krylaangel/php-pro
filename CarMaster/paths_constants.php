@@ -1,4 +1,5 @@
 <?php
+
 namespace CarMaster;
 
 const APP_DIR = __DIR__ . '/';

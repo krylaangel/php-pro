@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CarMaster;
@@ -25,7 +26,9 @@ class Validator
      */
     public function validateCharacterCount($countCharacter, int $minCountCharacter): bool
     {
-        $numberLength = (is_string($countCharacter) ? strlen((string)$countCharacter) : is_int($countCharacter)) ? strlen((string)$countCharacter) : null;
+        $numberLength = (is_string($countCharacter) ? strlen((string)$countCharacter) : is_int(
+            $countCharacter
+        )) ? strlen((string)$countCharacter) : null;
         if ($numberLength !== null >= $minCountCharacter) {
             return true;
         } else {
