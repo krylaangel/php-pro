@@ -21,7 +21,7 @@ try {
     $anotherCar->addSparePart(new SparePart('Brake Pads', 'Another Model', 200));
     $secondAllSparePartsInfo = $anotherCar->getAllSpareParts();
 
-    $carOwner = new CarOwner('John Doe', 389876543210, new Validator());
+    $carOwner = new CarOwner('John Doe', 38987654320, new Validator());
     $carOwner->addVehicle($anotherCar);
     $carOwner->addVehicle($car);
 
