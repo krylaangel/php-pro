@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CarMaster\Exception;
 
-class LengthValidationException extends InputValidationException
+class LengthException extends ValidationException
 {
     public function __construct(int $minCountCharacter)
     {

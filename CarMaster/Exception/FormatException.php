@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CarMaster\Exception;
 
-class FormatValidationException extends InputValidationException
+class FormatException extends ValidationException
 {
     public function __construct()
     {

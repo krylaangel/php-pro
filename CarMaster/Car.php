@@ -68,5 +68,7 @@ class Car extends Vehicle
     public function setBodyType(string $bodyType): void
     {
         $this->bodyType = $bodyType;
+        $this->validator->verifyInputFields($bodyType);
+
     }
 }

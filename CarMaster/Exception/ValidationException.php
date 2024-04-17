@@ -6,7 +6,7 @@ namespace CarMaster\Exception;
 
 use RuntimeException;
 
-class InputValidationException extends RuntimeException
+class ValidationException extends RuntimeException
 {
     public function __construct(string $message = "Invalid input data")
     {

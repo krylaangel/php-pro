@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
+use CarMaster\Exception\FileOperationException;
+
 class CarOwner
 {
     protected Validator $validator;
@@ -48,6 +50,7 @@ class CarOwner
 
     /**
      * записывает в файл инфо, полученную из метода findOwnerCars и возвращает ошибки
+     * @throws FileOperationException
      */
     public function writeOwnerCarsInfo(): void
     {
@@ -55,10 +58,10 @@ class CarOwner
         if ($jsonString !== false) {
             $result = file_put_contents(OWNER_CARS_INFO, $jsonString);
             if ($result === false) {
-                throw new Exception("Ошибка при записи в файл: OWNER_CARS_INFO;");
+                throw new FileOperationException("Ошибка при записи в файл: OWNER_CARS_INFO;");
             }
         } else {
-            throw new Exception("Ошибка кодирования JSON");
+            throw new FileOperationException("Ошибка кодирования JSON");
         }
     }
 
@@ -82,6 +85,8 @@ class CarOwner
         $this->validator->validateCharacterCount($fullName, 2);
         $this->validator->validateNamePart($fullName);
         $this->fullName = $fullName;
+        $this->validator->verifyInputFields($fullName);
+
     }
 
     public function getContactNumber(): int
@@ -93,6 +98,8 @@ class CarOwner
     {
         $this->validator->validateCharacterCount($contactNumber, 12);
         $this->contactNumber = $contactNumber;
+        $this->validator->verifyInputFields($contactNumber);
+
     }
 
 }

@@ -44,6 +44,8 @@ abstract class Vehicle
     {
         $this->validator->validateCharacterCount($licensePlate, 4);
         $this->licensePlate = $licensePlate;
+        $this->validator->verifyInputFields($licensePlate);
+
     }
 
     public function getYearManufacture(): int
@@ -55,6 +57,8 @@ abstract class Vehicle
     {
         $this->validator->validateCharacterCount($yearManufacture, 4);
         $this->yearManufacture = $yearManufacture;
+        $this->validator->verifyInputFields($yearManufacture);
+
     }
 
     public function getBrand(): string
@@ -66,6 +70,7 @@ abstract class Vehicle
     {
         $this->validator->validateNamePart($brand);
         $this->validator->validateCharacterCount($brand, 3);
+        $this->validator->verifyInputFields($brand);
         $this->brand = $brand;
     }
 }
