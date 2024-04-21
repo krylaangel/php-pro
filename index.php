@@ -1,23 +1,29 @@
 <?php
 
 declare(strict_types=1);
-require_once 'autoloader.php';
+
+//require_once 'autoloader.php';
+require __DIR__ . '/vendor/autoload.php';
+//require_once __DIR__ . '/src/CarMaster/paths_constants.php';
+
 
 use CarMaster\Car;
-use CarMaster\SparePart;
-use CarMaster\Validator;
 use CarMaster\CarOwner;
+use CarMaster\Exception\FileOperationException;
+use CarMaster\Exception\FormatException;
 use CarMaster\Exception\InputException;
 use CarMaster\Exception\LengthException;
-use CarMaster\Exception\FormatException;
-use CarMaster\Exception\FileOperationException;
-
+use CarMaster\SparePart;
+use CarMaster\Validator;
 
 use const CarMaster\CAR_INFO_JSON;
 use const CarMaster\CAR_OWNER_JSON;
 
+
 try {
-    $car = new Car('Chevrolet', 2017, 'Chevrolet', 'Sedan', new Validator());
+    $faker = Faker\Factory::create();
+
+    $car = new Car('I2II5KK', 2017, 'Chevrolet', 'Sedan', new Validator());
     $car->addSparePart(new SparePart('Engine Oil', 'Some Model', 50, new Validator()));
     $car->addSparePart(new SparePart('Brake Pads', 'Another Model', 5, new Validator()));
     $firstAllSparePartsInfo = $car->getAllSpareParts();
@@ -25,8 +31,11 @@ try {
     $anotherCar = new Car('ABC123', 2019, 'Toyota', 'SUV', new Validator());
     $anotherCar->addSparePart(new SparePart('Brake Pads', 'Another Model', 200, new Validator()));
     $secondAllSparePartsInfo = $anotherCar->getAllSpareParts();
+//
+    $ownerEmail = $faker->email();
+    $fullName = $faker->name();
 
-    $carOwner = new CarOwner('John Doe', 389876543205, new Validator());
+    $carOwner = new CarOwner($fullName, 389876543205, $ownerEmail, new Validator());
     $carOwner->addVehicle($anotherCar);
     $carOwner->addVehicle($car);
 
