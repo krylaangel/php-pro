@@ -69,6 +69,5 @@ class Car extends Vehicle
     {
         $this->bodyType = $bodyType;
         $this->validator->verifyInputFields($bodyType);
-
     }
 }
