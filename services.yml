@@ -1,0 +1,4 @@
+services:
+  App\Command\CarInformationCommand:
+    tags:
+      - { name: 'console.command' }

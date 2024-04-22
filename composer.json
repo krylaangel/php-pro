@@ -11,13 +11,16 @@
   ],
   "autoload": {
     "psr-4": {
+      "App\\": "src/",
       "CarMaster\\": "src/CarMaster"
     },
+    "classmap": ["src"],
     "files": [
       "src/CarMaster/paths_constants.php"
     ]
   },
   "require": {
-    "fakerphp/faker": "^v1.23.1"
+    "fakerphp/faker": "^v1.23.1",
+    "symfony/console": "^7.0"
   }
 }

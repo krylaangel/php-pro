@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-//require_once 'autoloader.php';
 require __DIR__ . '/vendor/autoload.php';
-//require_once __DIR__ . '/src/CarMaster/paths_constants.php';
 
 
 use CarMaster\Car;

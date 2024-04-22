@@ -12,3 +12,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --version=${COMPOSER_VERSION} \
     && composer clear-cache ;
 WORKDIR /var/www/html
+# Copy Symfony Console project files
+COPY . /var/www/html
+COPY /bin/console /var/www/html/bin/console
+
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Expose port and start Apache server
+EXPOSE 80
