@@ -46,15 +46,8 @@ try {
     $carOwner->writeOwnerCarsInfo(); //поиск всех авто определенного владельца
 
 
-} catch (InputException $e) {
-    echo "Input validation error: " . $e->getMessage();
-} catch (FormatException $e) {
-    echo "Data format error: " . $e->getMessage();
-} catch (LengthException $e) {
-    echo "Data length error: " . $e->getMessage();
-} catch (FileOperationException $e) {
-    echo "File operation error: " . $e->getMessage();
-} catch
-(Exception $e) {
+} catch (InputException | FormatException | LengthException | FileOperationException $e) {
+    echo "Error: " . $e->getMessage();
+} catch (Exception $e) {
     echo "An unknown error occurred: " . $e->getMessage();
 }
