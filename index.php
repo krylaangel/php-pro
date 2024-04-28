@@ -14,8 +14,12 @@ use CarMaster\Exception\LengthException;
 use CarMaster\SparePart;
 use CarMaster\Validator;
 
-use const CarMaster\CAR_INFO_JSON;
-use const CarMaster\CAR_OWNER_JSON;
+const APP_DIR = __DIR__ . '/';
+
+const JSON_DIR = \CarMaster\APP_DIR . 'json_files/';
+const CAR_OWNER_JSON = \CarMaster\JSON_DIR . 'car_owner.json';
+const CAR_INFO_JSON = JSON_DIR . 'car_info.json';
+const OWNER_CARS_INFO = JSON_DIR . 'owner_cars_info.json';
 
 
 try {
@@ -46,7 +50,7 @@ try {
     $carOwner->writeOwnerCarsInfo(); //поиск всех авто определенного владельца
 
 
-} catch (InputException | FormatException | LengthException | FileOperationException $e) {
+} catch (InputException|FormatException|LengthException|FileOperationException $e) {
     echo "Error: " . $e->getMessage();
 } catch (Exception $e) {
     echo "An unknown error occurred: " . $e->getMessage();
