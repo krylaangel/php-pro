@@ -29,11 +29,17 @@ try {
     $anotherCar = new Car('ABC123', 2019, 'Toyota', 'SUV', new Validator());
     $anotherCar->addSparePart(new SparePart('Brake Pads', 'Another Model', 200, new Validator()));
     $secondAllSparePartsInfo = $anotherCar->getAllSpareParts();
-//
-    $ownerEmail = $faker->email();
-    $fullName = $faker->name();
 
-    $carOwner = new CarOwner($fullName, 389876543205, $ownerEmail, new Validator());
+    $ownerEmail = $faker->email();
+    $firstName = $faker->firstName();
+    $lastName = $faker->lastName();
+    $password = $faker->password();
+    echo nl2br("$ownerEmail\n");
+    echo nl2br("$firstName\n");
+    echo nl2br("$lastName\n");
+    echo nl2br("$password\n");
+
+    $carOwner = new CarOwner($firstName, $lastName, $password, 389876543205, $ownerEmail, new Validator());
     $carOwner->addVehicle($anotherCar);
     $carOwner->addVehicle($car);
 
@@ -46,7 +52,7 @@ try {
     $carOwner->writeOwnerCarsInfo(); //поиск всех авто определенного владельца
 
 
-} catch (InputException | FormatException | LengthException | FileOperationException $e) {
+} catch (InputException|FormatException|LengthException|FileOperationException $e) {
     echo "Error: " . $e->getMessage();
 } catch (Exception $e) {
     echo "An unknown error occurred: " . $e->getMessage();

@@ -9,15 +9,25 @@ use CarMaster\Exception\FileOperationException;
 class CarOwner
 {
     protected Validator $validator;
-    private string $fullName;
+    private string $firstName;
+    private string $lastName;
+    private string $password;
     private string $ownerEmail;
     protected array $vehicleInfo = [];
     private int $contactNumber;
 
-    public function __construct(string $fullName, int $contactNumber, string$ownerEmail, Validator $validator)
-    {
+    public function __construct(
+        string $firstName,
+        string $lastName,
+        string $password,
+        int $contactNumber,
+        string $ownerEmail,
+        Validator $validator
+    ) {
         $this->validator = $validator;
-        $this->setFullName($fullName);
+        $this->setFirstName($firstName);
+        $this->setLastName($lastName);
+        $this->setPassword($password);
         $this->setContactNumber($contactNumber);
         $this->setOwnerEmail($ownerEmail);
     }
@@ -25,9 +35,11 @@ class CarOwner
     public function writeOwnerInfo(string $filenameCarOwner): void
     {
         $ownerInfo = [
-            'Full Name' => $this->getFullName(),
+            'First Name' => $this->getFirstName(),
+            'Last Name' => $this->getLastName(),
             'Contact Number' => $this->getContactNumber(),
-            'Email' => $this->getOwnerEmail()
+            'Email' => $this->getOwnerEmail(),
+            'Password' => $this->getPassword()
         ];
 
         $json_data = json_encode($ownerInfo, JSON_PRETTY_PRINT);
@@ -38,7 +50,7 @@ class CarOwner
 
     public function findOwnerCars(): array
     {
-        $findOwner = $this->getFullName();
+        $findOwner = $this->getFirstName() . $this->getLastName();
         $findCar = [];
         foreach ($this->getVehicleInfo() as $vehicleInfo) {
             if ($vehicleInfo instanceof Car) {
@@ -78,18 +90,24 @@ class CarOwner
         return $this->vehicleInfo;
     }
 
-    public function getFullName(): string
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
     {
-        return $this->fullName;
+        return $this->firstName;
     }
 
-    public function setFullName(string $fullName): void
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName): void
     {
-        $this->validator->validateCharacterCount($fullName, 2);
-        $this->validator->validateNamePart($fullName);
-        $this->fullName = $fullName;
-        $this->validator->verifyInputFields($fullName);
-
+        $this->firstName = $firstName;
+        $this->validator->validateCharacterCount($firstName, 2);
+        $this->validator->validateNamePart($firstName);
+        $this->firstName = $firstName;
+        $this->validator->verifyInputFields($firstName);
     }
 
     public function getContactNumber(): int
@@ -102,21 +120,42 @@ class CarOwner
         $this->validator->validateCharacterCount($contactNumber, 12);
         $this->contactNumber = $contactNumber;
         $this->validator->verifyInputFields($contactNumber);
+    }
 
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
+        $this->validator->verifyInputFields($lastName);
+    }
+
+    public function getOwnerEmail(): string
+    {
+        return $this->ownerEmail;
+    }
+
+    public function setOwnerEmail(string $ownerEmail): void
+    {
+        $this->ownerEmail = $ownerEmail;
     }
 
     /**
      * @return string
      */
-    public function getOwnerEmail(): string
+    public function getPassword(): string
     {
-        return $this->ownerEmail;
+        return $this->password;
     }
+
     /**
-     * @param string $ownerEmail
+     * @param string $password
      */
-    public function setOwnerEmail(string $ownerEmail): void
+    public function setPassword(string $password): void
     {
-        $this->ownerEmail = $ownerEmail;
+        $this->password = $password;
     }
 }
