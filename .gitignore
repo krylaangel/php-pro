@@ -1,0 +1,5 @@
+.idea
+/vendor
+/log
+.env
+mysql/mysql.sock
