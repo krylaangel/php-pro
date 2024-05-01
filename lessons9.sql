@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS `car`
 (
     `car_id`           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `owner_id`         INT UNSIGNED,
-    `spare_part_id`    INT UNSIGNED,
     `license_plate`    CHAR(60) NOT NULL,
     `year_manufacture` INT      NOT NULL,
     `brand`            CHAR(60) NOT NULL,
@@ -29,7 +28,6 @@ CREATE TABLE IF NOT EXISTS `car`
 CREATE TABLE IF NOT EXISTS `spare_part`
 (
     `spare_part_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `car_id`        INT UNSIGNED,
     `name_part`     CHAR(60) NOT NULL,
     `model_part`    CHAR(60) NOT NULL,
     `price_part`    FLOAT    NOT NULL,
