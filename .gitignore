@@ -2,4 +2,3 @@
 /vendor
 /log
 .env
-mysql/mysql.sock
