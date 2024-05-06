@@ -48,9 +48,18 @@ ALTER TABLE book
 
 # новый запрос через созданный индекс+проверка на єфективность использования индексов
 # EXPLAIN
-SELECT author.first_name, author.last_name, COUNT(book.id) AS book_count
+SELECT author.`first_name`, author.`last_name`, COUNT(book.id) AS book_count
 FROM author
          LEFT JOIN book ON author.id = book.author_id
 WHERE author.first_name = 'Zaria'
   AND author.last_name = 'Barton'
-GROUP BY author.first_name, author.last_name;
+GROUP BY author.`first_name`, author.`last_name`;
+
+# второй вариант без указания названий таблиц перед полями, т.к. поля имя и фамилия в таблице книги не используются
+EXPLAIN
+SELECT `first_name`, `last_name`, COUNT(book.id) AS book_count
+FROM author
+         LEFT JOIN book ON author.id = book.author_id
+WHERE `first_name` = 'Zaria'
+  AND `last_name` = 'Barton'
+GROUP BY `first_name`, `last_name`;
