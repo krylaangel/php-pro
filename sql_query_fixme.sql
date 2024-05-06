@@ -56,7 +56,7 @@ WHERE author.first_name = 'Zaria'
 GROUP BY author.`first_name`, author.`last_name`;
 
 # второй вариант без указания названий таблиц перед полями, т.к. поля имя и фамилия в таблице книги не используются
-EXPLAIN
+# EXPLAIN
 SELECT `first_name`, `last_name`, COUNT(book.id) AS book_count
 FROM author
          LEFT JOIN book ON author.id = book.author_id
