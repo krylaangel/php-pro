@@ -1,8 +1,8 @@
 <?php
 
-namespace CarMaster;
+namespace CarMaster\Write_files;
 
-const APP_DIR = __DIR__ . '/../paths_constants.php/';
+const APP_DIR = __DIR__ . '/';
 
 const JSON_DIR = APP_DIR . 'json_files/';
 

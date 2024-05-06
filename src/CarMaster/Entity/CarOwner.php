@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CarMaster;
+namespace App\CarMaster\Entity;
 
 use CarMaster\Exception\FileOperationException;
+
+use const CarMaster\Write_files\OWNER_CARS_INFO;
 
 class CarOwner
 {

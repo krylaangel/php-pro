@@ -16,7 +16,7 @@
     },
     "classmap": ["src"],
     "files": [
-      "src/CarMaster/paths_constants.php"
+      "src/CarMaster/Write_files/paths_constants.php"
     ]
   },
   "require": {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CarMaster;
+namespace App\CarMaster\Entity;
 
 abstract class Vehicle
 

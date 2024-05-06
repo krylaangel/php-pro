@@ -5,17 +5,17 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 
-use CarMaster\Car;
-use CarMaster\CarOwner;
+use App\CarMaster\Entity\Car;
+use App\CarMaster\Entity\CarOwner;
+use App\CarMaster\Entity\SparePart;
+use App\CarMaster\Entity\Validator;
 use CarMaster\Exception\FileOperationException;
 use CarMaster\Exception\FormatException;
 use CarMaster\Exception\InputException;
 use CarMaster\Exception\LengthException;
-use CarMaster\SparePart;
-use CarMaster\Validator;
 
-use const CarMaster\CAR_INFO_JSON;
-use const CarMaster\CAR_OWNER_JSON;
+use const CarMaster\Write_files\CAR_INFO_JSON;
+use const CarMaster\Write_files\CAR_OWNER_JSON;
 
 
 try {

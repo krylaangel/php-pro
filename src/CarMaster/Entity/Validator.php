@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CarMaster;
+namespace App\CarMaster\Entity;
 
 use CarMaster\Exception\FormatException;
 use CarMaster\Exception\InputException;

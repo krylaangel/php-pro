@@ -2,9 +2,9 @@
 
 namespace App\Command;
 
-use CarMaster\Car;
-use CarMaster\SparePart;
-use CarMaster\Validator;
+use App\CarMaster\Entity\Car;
+use App\CarMaster\Entity\SparePart;
+use App\CarMaster\Entity\Validator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

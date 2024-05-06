@@ -6,17 +6,17 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\CarMaster\\Entity\\Car' => $baseDir . '/src/CarMaster/Entity/Car.php',
+    'App\\CarMaster\\Entity\\CarOwner' => $baseDir . '/src/CarMaster/Entity/CarOwner.php',
+    'App\\CarMaster\\Entity\\SparePart' => $baseDir . '/src/CarMaster/Entity/SparePart.php',
+    'App\\CarMaster\\Entity\\Validator' => $baseDir . '/src/CarMaster/Entity/Validator.php',
+    'App\\CarMaster\\Entity\\Vehicle' => $baseDir . '/src/CarMaster/Entity/Vehicle.php',
     'App\\Command\\CarInformationCommand' => $baseDir . '/src/Command/CarInformationCommand.php',
-    'CarMaster\\Car' => $baseDir . '/src/CarMaster/Car.php',
-    'CarMaster\\CarOwner' => $baseDir . '/src/CarMaster/CarOwner.php',
     'CarMaster\\Exception\\FileOperationException' => $baseDir . '/src/CarMaster/Exception/FileOperationException.php',
     'CarMaster\\Exception\\FormatException' => $baseDir . '/src/CarMaster/Exception/FormatException.php',
     'CarMaster\\Exception\\InputException' => $baseDir . '/src/CarMaster/Exception/InputException.php',
     'CarMaster\\Exception\\LengthException' => $baseDir . '/src/CarMaster/Exception/LengthException.php',
     'CarMaster\\Exception\\ValidationException' => $baseDir . '/src/CarMaster/Exception/ValidationException.php',
-    'CarMaster\\SparePart' => $baseDir . '/src/CarMaster/SparePart.php',
-    'CarMaster\\Validator' => $baseDir . '/src/CarMaster/Validator.php',
-    'CarMaster\\Vehicle' => $baseDir . '/src/CarMaster/Vehicle.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Normalizer' => $vendorDir . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
 );

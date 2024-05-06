@@ -13,7 +13,7 @@ class ComposerStaticInit1f2a5429743de295598442a5dbf2e20b
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
-        '54a408186e6c5db8581c9b48efad4e09' => __DIR__ . '/../..' . '/src/CarMaster/paths_constants.php',
+        '4004a7b54c90ea0cd673ace4ec0882f9' => __DIR__ . '/../..' . '/src/CarMaster/Write_files/paths_constants.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -93,17 +93,17 @@ class ComposerStaticInit1f2a5429743de295598442a5dbf2e20b
     );
 
     public static $classMap = array (
+        'App\\CarMaster\\Entity\\Car' => __DIR__ . '/../..' . '/src/CarMaster/Entity/Car.php',
+        'App\\CarMaster\\Entity\\CarOwner' => __DIR__ . '/../..' . '/src/CarMaster/Entity/CarOwner.php',
+        'App\\CarMaster\\Entity\\SparePart' => __DIR__ . '/../..' . '/src/CarMaster/Entity/SparePart.php',
+        'App\\CarMaster\\Entity\\Validator' => __DIR__ . '/../..' . '/src/CarMaster/Entity/Validator.php',
+        'App\\CarMaster\\Entity\\Vehicle' => __DIR__ . '/../..' . '/src/CarMaster/Entity/Vehicle.php',
         'App\\Command\\CarInformationCommand' => __DIR__ . '/../..' . '/src/Command/CarInformationCommand.php',
-        'CarMaster\\Car' => __DIR__ . '/../..' . '/src/CarMaster/Car.php',
-        'CarMaster\\CarOwner' => __DIR__ . '/../..' . '/src/CarMaster/CarOwner.php',
         'CarMaster\\Exception\\FileOperationException' => __DIR__ . '/../..' . '/src/CarMaster/Exception/FileOperationException.php',
         'CarMaster\\Exception\\FormatException' => __DIR__ . '/../..' . '/src/CarMaster/Exception/FormatException.php',
         'CarMaster\\Exception\\InputException' => __DIR__ . '/../..' . '/src/CarMaster/Exception/InputException.php',
         'CarMaster\\Exception\\LengthException' => __DIR__ . '/../..' . '/src/CarMaster/Exception/LengthException.php',
         'CarMaster\\Exception\\ValidationException' => __DIR__ . '/../..' . '/src/CarMaster/Exception/ValidationException.php',
-        'CarMaster\\SparePart' => __DIR__ . '/../..' . '/src/CarMaster/SparePart.php',
-        'CarMaster\\Validator' => __DIR__ . '/../..' . '/src/CarMaster/Validator.php',
-        'CarMaster\\Vehicle' => __DIR__ . '/../..' . '/src/CarMaster/Vehicle.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
     );
