@@ -46,16 +46,7 @@ ALTER TABLE book
 # CREATE INDEX name_author_id ON book (author_id);
 # CREATE INDEX name_index ON author (first_name, last_name); или вот так создать новый индекс
 
-# новый запрос через созданный индекс+проверка на єфективность использования индексов
-# EXPLAIN
-SELECT author.`first_name`, author.`last_name`, COUNT(book.id) AS book_count
-FROM author
-         LEFT JOIN book ON author.id = book.author_id
-WHERE author.first_name = 'Zaria'
-  AND author.last_name = 'Barton'
-GROUP BY author.`first_name`, author.`last_name`;
-
-# второй вариант без указания названий таблиц перед полями, т.к. поля имя и фамилия в таблице книги не используются
+# новый запрос через созданный индекс+проверка на эфективность использования индексов
 # EXPLAIN
 SELECT `first_name`, `last_name`, COUNT(book.id) AS book_count
 FROM author
