@@ -15,10 +15,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
     --install-dir=/usr/local/bin \
     --version=${COMPOSER_VERSION} \
-    && composer clear-cache ; \
-
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+    && composer clear-cache ;
 
 # Expose port and start Apache server
 EXPOSE 80

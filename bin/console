@@ -4,12 +4,14 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\Command\FindSparePart;
 use Symfony\Component\Console\Application;
 use App\Command\CarInformationCommand;
 
 
 $application = new Application();
 $application->add(new CarInformationCommand());
+$application->add(new FindSparePart());
 
 
 // ... register commands

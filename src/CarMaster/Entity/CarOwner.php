@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity;
 
-use CarMaster\Exception\FileOperationException;
+use App\CarMaster\Entity\Exception\FileOperationException;
 
 use const CarMaster\Write_files\OWNER_CARS_INFO;
 

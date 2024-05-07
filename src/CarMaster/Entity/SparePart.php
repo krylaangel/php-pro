@@ -7,13 +7,21 @@ namespace App\CarMaster\Entity;
 class SparePart
 {
     protected Validator $validator;
+
+    protected ?int $partId;
     protected string $namePart;
     protected string $modelPart;
     protected float $pricePart;
 
-    public function __construct(string $namePart, string $modelPart, float $pricePart, Validator $validator)
-    {
+    public function __construct(
+        ?int $partId,
+        string $namePart,
+        string $modelPart,
+        float $pricePart,
+        Validator $validator
+    ) {
         $this->validator = $validator;
+        $this->setPartId($partId);
         $this->setNamePart($namePart);
         $this->setModelPart($modelPart);
         $this->setPricePart($pricePart);
@@ -26,6 +34,16 @@ class SparePart
             'Model Part' => $this->getModelPart(),
             'Price Part' => $this->getPricePart()
         ];
+    }
+
+    public function getPartId(): ?int
+    {
+        return $this->partId;
+    }
+
+    public function setPartId(?int $partId): void
+    {
+        $this->partId = $partId;
     }
 
     public function getModelPart(): string

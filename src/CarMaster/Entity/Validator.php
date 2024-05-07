@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity;
 
-use CarMaster\Exception\FormatException;
-use CarMaster\Exception\InputException;
-use CarMaster\Exception\LengthException;
+use App\CarMaster\Entity\Exception\FormatException;
+use App\CarMaster\Entity\Exception\InputException;
+use App\CarMaster\Entity\Exception\LengthException;
 
 class Validator
 {
