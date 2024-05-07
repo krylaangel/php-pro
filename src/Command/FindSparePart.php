@@ -3,8 +3,6 @@
 namespace App\Command;
 
 use AllowDynamicProperties;
-use App\CarMaster\Entity\SparePart;
-use App\CarMaster\Repository\Exception\LogicErrorException;
 use CarMaster\Repository\SparePartRepository;
 use CarMaster\ServiceFactory;
 use Symfony\Component\Console\Command\Command;
@@ -12,7 +10,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use PDO;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
