@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CarMaster\Exception;
+namespace App\CarMaster\Entity\Exception;
 use Exception;
 
 class FileOperationException extends Exception

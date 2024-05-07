@@ -7,13 +7,13 @@ require __DIR__ . '/vendor/autoload.php';
 
 use App\CarMaster\Entity\Car;
 use App\CarMaster\Entity\CarOwner;
+use App\CarMaster\Entity\Exception\FileOperationException;
+use App\CarMaster\Entity\Exception\FormatException;
+use App\CarMaster\Entity\Exception\InputException;
+use App\CarMaster\Entity\Exception\LengthException;
 use App\CarMaster\Entity\SparePart;
 use App\CarMaster\Entity\Validator;
-use CarMaster\Exception\FileOperationException;
-use CarMaster\Exception\FormatException;
-use CarMaster\Exception\InputException;
-use CarMaster\Exception\LengthException;
-
+use App\Command\CreatSparePart;
 use const CarMaster\Write_files\CAR_INFO_JSON;
 use const CarMaster\Write_files\CAR_OWNER_JSON;
 
@@ -34,10 +34,6 @@ try {
     $firstName = $faker->firstName();
     $lastName = $faker->lastName();
     $password = $faker->password();
-    echo nl2br("$ownerEmail\n");
-    echo nl2br("$firstName\n");
-    echo nl2br("$lastName\n");
-    echo nl2br("$password\n");
 
     $carOwner = new CarOwner($firstName, $lastName, $password, 389876543205, $ownerEmail, new Validator());
     $carOwner->addVehicle($anotherCar);
@@ -50,6 +46,8 @@ try {
     $car->writeInfoEquipment(CAR_INFO_JSON);
 
     $carOwner->writeOwnerCarsInfo(); //поиск всех авто определенного владельца
+
+    $creatSparePart = new CreatSparePart();
 
 
 } catch (InputException|FormatException|LengthException|FileOperationException $e) {
