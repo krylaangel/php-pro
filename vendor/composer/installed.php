@@ -3,7 +3,7 @@
         'name' => 'krylaangel/php-pro',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'fd60e4cb6fd0fe946a46062b9bcf8741fc27d16a',
+        'reference' => '427d9e3a8aad0e29059d65d4970cdd93a3f5267f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'krylaangel/php-pro' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'fd60e4cb6fd0fe946a46062b9bcf8741fc27d16a',
+            'reference' => '427d9e3a8aad0e29059d65d4970cdd93a3f5267f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

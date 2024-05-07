@@ -6,6 +6,7 @@ namespace CarMaster\Repository;
 
 use App\CarMaster\Entity\SparePart;
 use PDO;
+use App\CarMaster\Entity\Validator;
 
 readonly class SparePartRepository
 {
@@ -39,10 +40,10 @@ readonly class SparePartRepository
         );
 
         $statement->execute([
+            ':spare_part_id' => $sparePart->getPartId(),
             ':namePart' => $sparePart->getNamePart(),
             ':modelPart' => $sparePart->getModelPart(),
             ':pricePart' => $sparePart->getPricePart(),
-            ':spare_part_id' => $sparePart->getId(),
 
         ]);
     }
@@ -58,14 +59,14 @@ readonly class SparePartRepository
         if (!$foundModel) {
             return null;
         }
-        $sparePart = new SparePart();
-        // Устанавливаем атрибуты найденной детали в объект SparePart
-        $sparePart->setNamePart($foundModel->name_part);
-        $sparePart->setPricePart($foundModel->price_part);
-        $sparePart->setId($foundModel->spare_part_id);
-
-        return $sparePart;
+        return new SparePart(
+            $foundModel->spare_part_id,
+            $foundModel->name_part,
+            $model,
+            $foundModel->price_part,
+            $validator=new Validator()
+        );
     }
-    }
+}
 
 

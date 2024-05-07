@@ -13,7 +13,6 @@ use App\CarMaster\Entity\Exception\InputException;
 use App\CarMaster\Entity\Exception\LengthException;
 use App\CarMaster\Entity\SparePart;
 use App\CarMaster\Entity\Validator;
-use App\Command\CreatSparePart;
 use const CarMaster\Write_files\CAR_INFO_JSON;
 use const CarMaster\Write_files\CAR_OWNER_JSON;
 
@@ -22,12 +21,12 @@ try {
     $faker = Faker\Factory::create();
 
     $car = new Car('I2II5KK', 2017, 'Chevrolet', 'Sedan', new Validator());
-    $car->addSparePart(new SparePart('Engine Oil', 'Some Model', 50, new Validator()));
-    $car->addSparePart(new SparePart('Brake Pads', 'Another Model', 5, new Validator()));
+    $car->addSparePart(new SparePart(null,'Engine Oil', 'Some Model', 50, new Validator()));
+    $car->addSparePart(new SparePart(null,'Brake Pads', 'Another Model', 5, new Validator()));
     $firstAllSparePartsInfo = $car->getAllSpareParts();
 
     $anotherCar = new Car('ABC123', 2019, 'Toyota', 'SUV', new Validator());
-    $anotherCar->addSparePart(new SparePart('Brake Pads', 'Another Model', 200, new Validator()));
+    $anotherCar->addSparePart(new SparePart(null,'Brake Pads', 'Another Model', 200, new Validator()));
     $secondAllSparePartsInfo = $anotherCar->getAllSpareParts();
 
     $ownerEmail = $faker->email();
@@ -46,9 +45,6 @@ try {
     $car->writeInfoEquipment(CAR_INFO_JSON);
 
     $carOwner->writeOwnerCarsInfo(); //поиск всех авто определенного владельца
-
-    $creatSparePart = new CreatSparePart();
-
 
 } catch (InputException|FormatException|LengthException|FileOperationException $e) {
     echo "Error: " . $e->getMessage();

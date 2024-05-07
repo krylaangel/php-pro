@@ -8,19 +8,25 @@ class SparePart
 {
     protected Validator $validator;
 
-    protected int $id;
-
+    protected ?int $partId;
     protected string $namePart;
     protected string $modelPart;
     protected float $pricePart;
 
-    public function __construct(string $namePart, string $modelPart, float $pricePart, Validator $validator)
-    {
+    public function __construct(
+        ?int $partId,
+        string $namePart,
+        string $modelPart,
+        float $pricePart,
+        Validator $validator
+    ) {
         $this->validator = $validator;
+        $this->setPartId($partId);
         $this->setNamePart($namePart);
         $this->setModelPart($modelPart);
         $this->setPricePart($pricePart);
     }
+
     public function getPartInfo(): array
     {
         return [
@@ -29,14 +35,15 @@ class SparePart
             'Price Part' => $this->getPricePart()
         ];
     }
-    public function getId(): ?int
+
+    public function getPartId(): ?int
     {
-        return $this->id;
+        return $this->partId;
     }
 
-    public function setId(int $id): void
+    public function setPartId(?int $partId): void
     {
-        $this->id = $id;
+        $this->partId = $partId;
     }
 
     public function getModelPart(): string

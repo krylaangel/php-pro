@@ -45,3 +45,7 @@ CREATE TABLE IF NOT EXISTS car_spares_parts
     PRIMARY KEY (car_id, spare_part_id)
 );
 
+INSERT INTO spare_part (name_part, model_part, price_part) VALUES ('Part 1', 'Model 1', 100.00);
+INSERT INTO spare_part (name_part, model_part, price_part) VALUES ('Part 2', 'Model 2', 100.00);
+INSERT INTO spare_part (name_part, model_part, price_part) VALUES ('Part 3', 'Model 3', 100.00);
+INSERT INTO spare_part (name_part, model_part, price_part) VALUES ('Brake Pad', 'Toyota Camry', 100.00);

@@ -2,3 +2,8 @@ services:
   App\Command\CarInformationCommand:
     tags:
       - { name: 'console.command' }
+  App\Command\FindSparePartByModelCommand:
+    arguments:
+      $sparePartRepository: '@App\CarMaster\Repository\SparePartRepository'
+    tags:
+      - 'console.command'
