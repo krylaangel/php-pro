@@ -2,7 +2,6 @@
 
 namespace App\Command;
 
-use AllowDynamicProperties;
 use CarMaster\Repository\SparePartRepository;
 use CarMaster\ServiceFactory;
 use Symfony\Component\Console\Command\Command;
@@ -13,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-#[AllowDynamicProperties] class FindSparePart extends Command
+class FindSparePart extends Command
 {
 
     protected function configure(): void
@@ -30,7 +29,8 @@ require __DIR__ . '/../../vendor/autoload.php';
 
         try {
             $pdo = $services->createPDO();
-            $sparePartRepository = new SparePartRepository($pdo);        } catch (\Exception $e) {
+            $sparePartRepository = new SparePartRepository($pdo);
+        } catch (\Exception $e) {
             $output->writeln('Error creating SparePartRepository: ' . $e->getMessage());
             return Command::FAILURE;
         }

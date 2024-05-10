@@ -5,20 +5,40 @@ declare(strict_types=1);
 namespace App\CarMaster\Entity;
 
 use App\CarMaster\Entity\Exception\FileOperationException;
-
 use const CarMaster\Write_files\OWNER_CARS_INFO;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, JoinTable, ManyToMany, OneToMany, Table};
+use Doctrine\DBAL\Types\Types;
 
+#[Entity]
+#[Table(name: 'car_owner')]
 class CarOwner
 {
     protected Validator $validator;
+
+    #[Id]
+    #[GeneratedValue]
+    #[Column(name: 'owner_id', type: Types::INTEGER)]
+    protected ?int $ownerId;
+
+    #[Column(name: 'first_name', length: 20)]
     private string $firstName;
+    #[Column(name: 'last_name', length: 20)]
     private string $lastName;
+    #[Column(name: 'password', length: 60)]
     private string $password;
+    #[Column(name: 'email', length: 30)]
     private string $ownerEmail;
-    protected array $vehicleInfo = [];
+    #[Column(name: 'phone_number', type: Types::INTEGER)]
     private int $contactNumber;
 
+    #[OneToMany(targetEntity: Vehicle::class, mappedBy: 'owner', cascade: ["persist"] )]
+    protected Collection $vehicleInfo;
+
+
     public function __construct(
+        ?int $ownerId,
         string $firstName,
         string $lastName,
         string $password,
@@ -27,6 +47,8 @@ class CarOwner
         Validator $validator
     ) {
         $this->validator = $validator;
+        $this->vehicleInfo = new ArrayCollection();
+        $this->setOwnerId($ownerId);
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
         $this->setPassword($password);
@@ -87,9 +109,25 @@ class CarOwner
         $this->vehicleInfo[] = $vehicleInfo;
     }
 
-    public function getVehicleInfo(): array
+    public function getVehicleInfo(): ArrayCollection|Collection
     {
         return $this->vehicleInfo;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getOwnerId(): ?int
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * @param int|null $ownerId
+     */
+    public function setOwnerId(?int $ownerId): void
+    {
+        $this->ownerId = $ownerId;
     }
 
     /**

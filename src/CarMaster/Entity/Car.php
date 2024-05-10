@@ -4,21 +4,29 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+
+#[Entity]
+
 class Car extends Vehicle
 
 {
+    #[Column(name: 'body_type', length: 60)]
     protected string $bodyType;
     protected array $spareParts = [];
 
 
     public function __construct(
+        ?int $vehicleId,
         string $licensePlate,
         int $yearManufacture,
         string $brand,
         string $bodyType,
         Validator $validator
+
     ) {
-        parent::__construct($licensePlate, $yearManufacture, $brand, $validator);
+        parent::__construct($vehicleId, $licensePlate, $yearManufacture, $brand, $validator);
         $this->setBodyType($bodyType);
     }
 
