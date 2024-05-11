@@ -4,14 +4,32 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, JoinTable, ManyToMany, OneToMany, Table};
+use Doctrine\DBAL\Types\Types;
+
+#[Entity]
+#[Table(name: 'spare_part')]
 class SparePart
 {
     protected Validator $validator;
-
+    #[Id]
+    #[GeneratedValue]
+    #[Column(name: 'spare_part_id', type: Types::INTEGER)]
     protected ?int $partId;
+
+    #[Column(name: 'name_part', length: 60)]
     protected string $namePart;
+
+    #[Column(name: 'model_part', length: 60)]
     protected string $modelPart;
+
+    #[Column(name: 'price_part', type: Types::FLOAT)]
     protected float $pricePart;
+
+    #[ManyToMany(targetEntity: Vehicle::class, mappedBy: 'spareParts')]
+    private Collection $vehicles;
 
     public function __construct(
         ?int $partId,

@@ -20,13 +20,14 @@ use const CarMaster\Write_files\CAR_OWNER_JSON;
 try {
     $faker = Faker\Factory::create();
 
-    $car = new Car('I2II5KK', 2017, 'Chevrolet', 'Sedan', new Validator());
-    $car->addSparePart(new SparePart(null,'Engine Oil', 'Some Model', 50, new Validator()));
-    $car->addSparePart(new SparePart(null,'Brake Pads', 'Another Model', 5, new Validator()));
+    $validator = new Validator();
+    $car = new Car(null, 'I2II5KK', 2017, 'Chevrolet', 'Sedan', $validator);
+    $car->addSparePart(new SparePart(null,'Engine Oil', 'Some Model', 50, $validator));
+    $car->addSparePart(new SparePart(null,'Brake Pads', 'Another Model', 5, $validator));
     $firstAllSparePartsInfo = $car->getAllSpareParts();
 
-    $anotherCar = new Car('ABC123', 2019, 'Toyota', 'SUV', new Validator());
-    $anotherCar->addSparePart(new SparePart(null,'Brake Pads', 'Another Model', 200, new Validator()));
+    $anotherCar = new Car(null, 'ABC123', 2019, 'Toyota', 'SUV', $validator);
+    $anotherCar->addSparePart(new SparePart(null,'Brake Pads', 'Another Model', 200, $validator));
     $secondAllSparePartsInfo = $anotherCar->getAllSpareParts();
 
     $ownerEmail = $faker->email();
@@ -34,7 +35,7 @@ try {
     $lastName = $faker->lastName();
     $password = $faker->password();
 
-    $carOwner = new CarOwner($firstName, $lastName, $password, 389876543205, $ownerEmail, new Validator());
+    $carOwner = new CarOwner(null, $firstName, $lastName, $password, 389876543205, $ownerEmail, $validator);
     $carOwner->addVehicle($anotherCar);
     $carOwner->addVehicle($car);
 
