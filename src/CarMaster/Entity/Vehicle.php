@@ -13,12 +13,12 @@ use Doctrine\ORM\Mapping\{Column,
     GeneratedValue,
     Id,
     InheritanceType,
+    InverseJoinColumn,
     JoinColumn,
     JoinTable,
     ManyToMany,
     ManyToOne,
-    Table
-};
+    Table};
 
 #[Entity]
 #[Table(name: 'vehicle')]
@@ -49,11 +49,10 @@ abstract class Vehicle
     private CarOwner $owner;
 
     #[ManyToMany(targetEntity: SparePart::class, inversedBy: 'vehicles')]
-    #[JoinTable(
-        name: 'car_spares_parts',
-        joinColumns: [JoinColumn(name: 'vehicle_id', referencedColumnName: 'vehicle_id')],
-        inverseJoinColumns: [JoinColumn(name: 'spare_part_id', referencedColumnName: 'spare_part_id')]
-    )]
+    #[JoinTable(name: 'car_spares_parts')]
+    #[JoinColumn(name: 'vehicle_id', referencedColumnName: 'vehicle_id')]
+    #[InverseJoinColumn(name: 'spare_part_id', referencedColumnName: 'spare_part_id')]
+
     private SparePart $sparePart;
 
     public function __construct(
