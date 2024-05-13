@@ -34,8 +34,9 @@ try {
     $firstName = $faker->firstName();
     $lastName = $faker->lastName();
     $password = $faker->password();
+    $number = $faker->phoneNumber();
 
-    $carOwner = new CarOwner(null, $firstName, $lastName, $password, 389876543205, $ownerEmail, $validator);
+    $carOwner = new CarOwner(null, $firstName, $lastName, $password, $number, $ownerEmail, $validator);
     $carOwner->addVehicle($anotherCar);
     $carOwner->addVehicle($car);
 

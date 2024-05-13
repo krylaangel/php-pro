@@ -30,7 +30,7 @@ class CarOwner
     private string $password;
     #[Column(name: 'email', length: 30)]
     private string $ownerEmail;
-    #[Column(name: 'phone_number', type: Types::INTEGER)]
+    #[Column(name: 'phone_number', type: Types::BIGINT)]
     private int $contactNumber;
 
     #[OneToMany(targetEntity: Vehicle::class, mappedBy: 'owner', cascade: ["persist"] )]

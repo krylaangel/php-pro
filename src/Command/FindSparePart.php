@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use CarMaster\Repository\SparePartRepository;
+use App\CarMaster\Entity\SparePart;
 use CarMaster\ServiceFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,17 +26,14 @@ class FindSparePart extends Command
     {
         $services = new ServiceFactory();
         $model = $input->getArgument('model');
-
         try {
-            $pdo = $services->createPDO();
-            $sparePartRepository = new SparePartRepository($pdo);
+            $entityManager = $services->createORMEntityManager();
         } catch (\Exception $e) {
             $output->writeln('Error creating SparePartRepository: ' . $e->getMessage());
             return Command::FAILURE;
         }
-
-        $sparePart = $sparePartRepository->findByModel($model);
-
+        $sparePart = $entityManager->getRepository(SparePart::class)
+            ->findOneBy(array('modelPart' => $model));
         if (!$sparePart) {
             $output->writeln("No spare parts found for model '{$model}'");
             return Command::FAILURE;
