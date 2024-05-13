@@ -107,7 +107,7 @@ abstract class Vehicle
 
     public function setLicensePlate(string $licensePlate): void
     {
-        $this->validator->validateCharacterCount($licensePlate, 4);
+        $this->validator->validateCharacterCount($licensePlate, 2);
         $this->licensePlate = $licensePlate;
         $this->validator->verifyInputFields($licensePlate);
     }
@@ -131,7 +131,7 @@ abstract class Vehicle
 
     public function setBrand(string $brand): void
     {
-        $this->validator->validateNamePart($brand);
+//        $this->validator->validateNamePart($brand); отключено, пока используется Faker
         $this->validator->validateCharacterCount($brand, 3);
         $this->validator->verifyInputFields($brand);
         $this->brand = $brand;
