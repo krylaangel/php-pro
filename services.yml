@@ -2,7 +2,7 @@ services:
   App\Command\CarInformationCommand:
     tags:
       - { name: 'console.command' }
-  App\Command\FindSparePartByModelCommand:
+  App\Command\FindSparePartForVehicle:
     tags:
       - 'console.command'
   App\Command\CreateSparePart:
@@ -14,3 +14,13 @@ services:
   App\Command\CreateCar:
     tags:
       - 'console.command'
+  App\Command\RemoveSparePart:
+      - tags:
+      - 'console.command'
+  App\Command\FindCarOwner:
+    - tags:
+    - 'console.command'
+  App\Command\ExportCarOwner:
+    - tags:
+    - 'console.command'
+

@@ -56,16 +56,20 @@ class CarOwner
         $this->setOwnerEmail($ownerEmail);
     }
 
-    public function writeOwnerInfo(string $filenameCarOwner): void
+    public function getOwnerInfo(): array
     {
-        $ownerInfo = [
+        return [
             'First Name' => $this->getFirstName(),
             'Last Name' => $this->getLastName(),
             'Contact Number' => $this->getContactNumber(),
             'Email' => $this->getOwnerEmail(),
             'Password' => $this->getPassword()
         ];
+    }
 
+    public function writeOwnerInfoToFile(string $filenameCarOwner): void
+    {
+        $ownerInfo = $this->getOwnerInfo();
         $json_data = json_encode($ownerInfo, JSON_PRETTY_PRINT);
         file_put_contents($filenameCarOwner, $json_data);
     }
@@ -125,6 +129,7 @@ class CarOwner
     /**
      * @param int|null $ownerId
      */
+
     public function setOwnerId(?int $ownerId): void
     {
         $this->ownerId = $ownerId;

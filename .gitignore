@@ -1,4 +1,5 @@
 .idea
 /vendor
+/export
 /log
 .env

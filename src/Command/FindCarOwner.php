@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\CarMaster\Entity\SparePart;
 use CarMaster\ServiceFactory;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,14 +12,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 require __DIR__ . '/../../vendor/autoload.php';
+#[AsCommand(name: 'app:find-car-owner', description: 'Find care owner by model')]
 
-class FindSparePart extends Command
+class FindCarOwner extends Command
 {
 
     protected function configure(): void
     {
-        $this->setName('app:find-spare-part')
-            ->setDescription('Find spare parts by model')
+        $this->setName('app:find-car-owner')
+            ->setDescription('Find care owner by model')
             ->addArgument('model', InputArgument::REQUIRED, 'The model to search for');
     }
 

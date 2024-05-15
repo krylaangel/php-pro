@@ -34,13 +34,12 @@ try {
     $firstName = $faker->firstName();
     $lastName = $faker->lastName();
     $password = $faker->password();
-    $number = $faker->phoneNumber();
 
-    $carOwner = new CarOwner(null, $firstName, $lastName, $password, $number, $ownerEmail, $validator);
+    $carOwner = new CarOwner(null, $firstName, $lastName, $password, 380661368736, $ownerEmail, $validator);
     $carOwner->addVehicle($anotherCar);
     $carOwner->addVehicle($car);
 
-    $carOwner->writeOwnerInfo(CAR_OWNER_JSON);
+    $carOwner->writeOwnerInfoToFile(CAR_OWNER_JSON);
 
     $allCarsInfo = array($car->getInformation(), $anotherCar->getInformation());
     $anotherCar->writeInfoEquipment(CAR_INFO_JSON);
