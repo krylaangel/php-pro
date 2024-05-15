@@ -1,15 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Command;
 
 use App\CarMaster\Entity\Car;
 use App\CarMaster\Entity\SparePart;
 use App\CarMaster\Entity\Validator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 require __DIR__ . '/../../vendor/autoload.php';
+#[AsCommand(name: 'app:car:info', description: 'Displays information about cars')]
 
 class CarInformationCommand extends Command
 {

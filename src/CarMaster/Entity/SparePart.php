@@ -39,6 +39,7 @@ class SparePart
         Validator $validator
     ) {
         $this->validator = $validator;
+        $this->vehicles = new ArrayCollection();
         $this->setPartId($partId);
         $this->setNamePart($namePart);
         $this->setModelPart($modelPart);
@@ -52,6 +53,15 @@ class SparePart
             'Model Part' => $this->getModelPart(),
             'Price Part' => $this->getPricePart()
         ];
+    }
+
+
+    public function addVehicle(Vehicle $vehicle): void
+    {
+        if (!$this->vehicles->contains($vehicle)) {
+            $this->vehicles[] = $vehicle;
+            $vehicle->addSpareParts($this);
+        }
     }
 
     public function getPartId(): ?int
@@ -99,4 +109,5 @@ class SparePart
         $this->pricePart = $pricePart;
         $this->validator->checkMinimumValue($pricePart);
     }
+
 }

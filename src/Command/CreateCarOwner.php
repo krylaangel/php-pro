@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Command;
 
@@ -10,12 +11,14 @@ use CarMaster\ServiceFactory;
 use Doctrine\ORM\Exception\ORMException;
 use Faker\Factory;
 use LengthException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 require __DIR__ . '/../../vendor/autoload.php';
+#[AsCommand(name: 'app:create-car-owner', description: 'Create car owner')]
 
 class CreateCarOwner extends Command
 {
@@ -36,7 +39,7 @@ class CreateCarOwner extends Command
                 $faker->firstName,
                 $faker->lastName,
                 $faker->password,
-                $faker->regexify('380[0-9]{9}'),
+                (int)$faker->regexify('380[0-9]{9}'),
 //            380661368736,
                 $faker->email,
                 $validator,

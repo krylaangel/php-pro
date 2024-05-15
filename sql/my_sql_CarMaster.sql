@@ -49,3 +49,11 @@ INSERT INTO spare_part (name_part, model_part, price_part) VALUES ('Part 1', 'Mo
 INSERT INTO spare_part (name_part, model_part, price_part) VALUES ('Part 2', 'Model 2', 100.00);
 INSERT INTO spare_part (name_part, model_part, price_part) VALUES ('Part 3', 'Model 3', 100.00);
 INSERT INTO spare_part (name_part, model_part, price_part) VALUES ('Brake Pad', 'Toyota Camry', 100.00);
+
+
+
+
+SELECT s0_.spare_part_id AS spare_part_id_0, s0_.name_part AS name_part_1, s0_.model_part AS model_part_2,
+       s0_.price_part AS price_part_3 FROM spare_part s0_ INNER JOIN car_spares_parts c2_ ON s0_.spare_part_id =
+                                                                                             c2_.spare_part_id INNER JOIN vehicle v1_ ON v1_.vehicle_id = c2_.vehicle_id AND v1_.type IN ('Car') WHERE
+    v1_.brand = ?

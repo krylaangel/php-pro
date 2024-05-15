@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\{Column,
@@ -18,7 +19,8 @@ use Doctrine\ORM\Mapping\{Column,
     JoinTable,
     ManyToMany,
     ManyToOne,
-    Table};
+    Table
+};
 
 #[Entity]
 #[Table(name: 'vehicle')]
@@ -47,13 +49,11 @@ abstract class Vehicle
     #[ManyToOne(targetEntity: CarOwner::class, inversedBy: 'vehicles')]
     #[JoinColumn(name: 'owner_id', referencedColumnName: 'owner_id')]
     private CarOwner $owner;
-
     #[ManyToMany(targetEntity: SparePart::class, inversedBy: 'vehicles')]
     #[JoinTable(name: 'car_spares_parts')]
     #[JoinColumn(name: 'vehicle_id', referencedColumnName: 'vehicle_id')]
     #[InverseJoinColumn(name: 'spare_part_id', referencedColumnName: 'spare_part_id')]
-
-    private SparePart $sparePart;
+    private Collection $spareParts;
 
     public function __construct(
         ?int $vehicleId,
@@ -63,6 +63,7 @@ abstract class Vehicle
         Validator $validator
     ) {
         $this->validator = $validator;
+        $this->spareParts = new ArrayCollection();
         $this->setVehicleId($vehicleId);
         $this->setLicensePlate($licensePlate);
         $this->setYearManufacture($yearManufacture);
@@ -83,10 +84,26 @@ abstract class Vehicle
     abstract public function getAllSpareParts();
 
     abstract public function writeInfoEquipment(string $filename): void;
+//    для установки связи по внешнему ключу для владельца. Используем в команде - создать машину так,
+//чтобы сразу связать и новосозданную машину и уже существующего владельца. Предполагается, что сначала
+//идет регистрация владельца, а потом машины
 
-    /**
-     * @return int|null
-     */
+    public function setOwner(CarOwner $owner): void
+    {
+        $this->owner = $owner;
+    }
+
+//    для установки связи в линковочной таблицы -
+//для команды создать запчасть, чтобы сразу соотв.определенной машине и наоборот
+
+    public function addSpareParts(SparePart $sparePart): void
+    {
+        if (!$this->spareParts->contains($sparePart)) {
+            $this->spareParts[] = $sparePart;
+            $sparePart->addVehicle($this);
+        }
+    }
+
     public function getVehicleId(): ?int
     {
         return $this->vehicleId;
