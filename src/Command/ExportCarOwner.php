@@ -37,7 +37,7 @@ class ExportCarOwner extends Command
 
 
             $exportDirectory = realpath($input->getArgument('exportDirectory'));
-            $exportFilename = $exportDirectory . 'export/owner.csv';
+            $exportFilename = $exportDirectory . '/owner.csv';
 
             if (file_exists($exportFilename)) {
                 // Если файл существует, открываем его для записи
