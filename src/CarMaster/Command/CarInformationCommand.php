@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\CarMaster\Command;
 
 use App\CarMaster\Entity\Car;
 use App\CarMaster\Entity\SparePart;
@@ -11,7 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 #[AsCommand(name: 'app:car:info', description: 'Displays information about cars')]
 
 class CarInformationCommand extends Command
@@ -24,8 +24,8 @@ class CarInformationCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $car = new Car('I2II5KK', 2017, 'Chevrolet', 'Sedan', new Validator());
-        $car->addSparePart(new SparePart('Engine Oil', 'Some Model', 50, new Validator()));
+        $car = new Car(null,'I2II5KK', 2017, 'Chevrolet', 'Sedan', new Validator());
+        $car->addSparePart(new SparePart(null,'Engine Oil', 'Some Model', 50, new Validator()));
 
         // Отримуємо інформацію про автомобіль та виводимо її в консоль
         $output->writeln('<info>Car information:</info>');

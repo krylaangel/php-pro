@@ -10,7 +10,6 @@ services:
       - mysql
     volumes:
       - ./:/var/www/html
-      - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
       - XDEBUG_CONFIG=${XDEBUG_CONFIG}

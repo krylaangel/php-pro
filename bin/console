@@ -4,15 +4,14 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Command\CreateCar;
-use App\Command\CreateCarOwner;
-use App\Command\CreateSparePart;
-use App\Command\ExportCarOwner;
-use App\Command\FindCarOwner;
-use App\Command\FindSparePartForVehicle;
-use App\Command\RemoveSparePart;
+use App\CarMaster\Command\CarInformationCommand;
+use App\CarMaster\Command\CreateCar;
+use App\CarMaster\Command\CreateCarOwner;
+use App\CarMaster\Command\CreateSparePart;
+use App\CarMaster\Command\ExportCarOwner;
+use App\CarMaster\Command\FindSparePartForVehicle;
+use App\CarMaster\Command\RemoveSparePart;
 use Symfony\Component\Console\Application;
-use App\Command\CarInformationCommand;
 
 
 $application = new Application();
@@ -22,8 +21,9 @@ $application->add(new CreateSparePart());
 $application->add(new CreateCarOwner());
 $application->add(new CreateCar());
 $application->add(new RemoveSparePart());
-$application->add(new FindCarOwner());
 $application->add(new ExportCarOwner());
+$application->add(new \App\Eloquent\Command\CreateCar());
+
 
 
 // ... register commands

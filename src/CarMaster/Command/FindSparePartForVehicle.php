@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\CarMaster\Command;
 
 use App\CarMaster\Entity\SparePart;
 use CarMaster\ServiceFactory;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 
 #[AsCommand(name: 'app:find-spare-part', description: 'Find spare parts by brand vehicles')]
 class FindSparePartForVehicle extends Command

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\CarMaster\Command;
 
 use App\CarMaster\Entity\CarOwner;
 use CarMaster\ServiceFactory;
@@ -13,9 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 
 #[AsCommand(name: 'app:export-car-owner', description: 'Export all books to CSV')]
+//php bin/console app:export-car-owner /var/www/html/export
 class ExportCarOwner extends Command
 {
     protected function configure(): void
@@ -37,7 +38,7 @@ class ExportCarOwner extends Command
 
 
             $exportDirectory = realpath($input->getArgument('exportDirectory'));
-            $exportFilename = $exportDirectory . '/owner.csv';
+            $exportFilename = $exportDirectory . DIRECTORY_SEPARATOR . 'owner.csv';
 
             if (file_exists($exportFilename)) {
                 // Если файл существует, открываем его для записи

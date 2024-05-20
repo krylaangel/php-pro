@@ -17,10 +17,9 @@ services:
   App\Command\RemoveSparePart:
       - tags:
       - 'console.command'
-  App\Command\FindCarOwner:
-    - tags:
-    - 'console.command'
   App\Command\ExportCarOwner:
     - tags:
     - 'console.command'
-
+  App\Eloquent\Command\CreateCar():
+    - tags:
+    - 'console.command'
