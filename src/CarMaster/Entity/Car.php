@@ -18,7 +18,7 @@ class Car extends Vehicle
 
 
     public function __construct(
-        ?int $vehicleId,
+        ?string $vehicleId,
         string $licensePlate,
         int $yearManufacture,
         string $brand,

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\CarMaster\Command;
 
 use App\CarMaster\Entity\Car;
 use App\CarMaster\Entity\CarOwner;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 #[AsCommand(name: 'app:create-car', description: 'Create car')]
 
 class CreateCar extends Command
