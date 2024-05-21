@@ -5,7 +5,6 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-require dirname(__DIR__) . '/../vendor/autoload.php';
 class Eloquent
 {
     public function configure():void

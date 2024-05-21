@@ -20,7 +20,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-require __DIR__ . '/../../../vendor/autoload.php';
 #[AsCommand(name: 'app:create-spare-part', description: 'Create spare parts')]
 
 class CreateSparePart extends Command

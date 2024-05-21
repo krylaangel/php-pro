@@ -25,7 +25,6 @@ $application->add(new ExportCarOwner());
 $application->add(new \App\Eloquent\Command\CreateCar());
 
 
-
 // ... register commands
 try {
     $application->run();

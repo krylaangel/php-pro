@@ -13,8 +13,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-require __DIR__ . '/../../../vendor/autoload.php';
-
 #[AsCommand(name: 'app:export-car-owner', description: 'Export all books to CSV')]
 //php bin/console app:export-car-owner /var/www/html/export
 class ExportCarOwner extends Command
