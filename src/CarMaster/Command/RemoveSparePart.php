@@ -14,7 +14,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-require __DIR__ . '/../../../vendor/autoload.php';
 #[AsCommand(name: 'app:remove-spare-part', description: 'remove spare parts')]
 
 class RemoveSparePart extends Command

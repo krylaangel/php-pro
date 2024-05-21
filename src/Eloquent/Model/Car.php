@@ -6,7 +6,6 @@ namespace App\Eloquent\Model;
 
 use App\CarMaster\Entity\SparePart;
 
-require __DIR__ . '/../../../vendor/autoload.php';
 
 class Car extends Vehicle
 

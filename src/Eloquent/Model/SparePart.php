@@ -7,9 +7,6 @@ namespace App\Eloquent\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-require __DIR__ . '/../../../vendor/autoload.php';
-
-
 class SparePart extends Model
 {
     protected $table = 'spare_part';
