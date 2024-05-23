@@ -20,17 +20,16 @@ return function (Request $request, array $attributes): Response {
     echo "Запрос создан: " . $query->getSQL() . "<br>";
 
     $spareParts = $query->getResult();
-return new Response($spareParts);
-//    if (count($spareParts)) {
-//        $html = "";
-//        foreach ($spareParts[0]->getPartInfo() as $key => $value) {
-//            $html .= "<tr><td><b>$key</b></td><td>$value</td><tr>";
-//            }
-//
-//       return new Response("<table>$html</table>");
-//    } else {
-//        return new Response(status: Response::HTTP_NOT_FOUND);
-//    }
+    if (count($spareParts)) {
+        $html = "";
+        foreach ($spareParts[0]->getPartInfo() as $key => $value) {
+            $html .= "<tr><td><b>$key</b></td><td>$value</td><tr>";
+            }
+
+       return new Response("<table>$html</table>");
+    } else {
+        return new Response(status: Response::HTTP_NOT_FOUND);
+    }
 };
 
 
