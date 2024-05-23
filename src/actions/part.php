@@ -14,16 +14,14 @@ return function (Request $request, array $attributes): Response {
         ->getRepository(SparePart::class)
         ->createQueryBuilder('s')
         ->join('s.vehicles', 'v')
-        ->where('v.license_plate = :license_plate');
+        ->where('v.licensePlate = :license_plate');
     $query = $queryBuilder->getQuery()
         ->setParameter('license_plate', $attributes['licensePlate']);
-    echo "Запрос создан: " . $query->getSQL() . "<br>";
-
     $spareParts = $query->getResult();
     if (count($spareParts)) {
         $html = "";
         foreach ($spareParts[0]->getPartInfo() as $key => $value) {
-            $html .= "<tr><td><b>$key</b></td><td>$value</td><tr>";
+            $html .= "<tr><td><b>$key</b></td><td>$value</td></tr>";
             }
 
        return new Response("<table>$html</table>");

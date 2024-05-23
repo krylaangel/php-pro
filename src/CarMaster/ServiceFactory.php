@@ -8,8 +8,10 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use PDO;
+//require dirname(__DIR__) . '/../vendor/autoload.php';
 
-require_once "vendor/autoload.php";
+
+//require_once "vendor/autoload.php";
 
 
 class ServiceFactory
