@@ -1,4 +1,10 @@
-FROM php:8.2.6-apache
+FROM nginx:1.26 as nginx-dev
+COPY nginx/default.conf /etc/nginx/conf.d/
+
+CMD ["nginx", "-g", "daemon off;"]
+
+FROM php:8.3-fpm as php-dev
+
 RUN apt-get update && apt-get install -y \
     git \
     zip \
@@ -15,10 +21,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
     --install-dir=/usr/local/bin \
     --version=${COMPOSER_VERSION} \
-    && composer clear-cache ;
+    && composer clear-cache
 
 # Expose port and start Apache server
-EXPOSE 80
 #xdebug
 ARG XDEBUG_ENABLED=false
 RUN if $XDEBUG_ENABLED; then pecl install xdebug \
@@ -28,6 +33,3 @@ RUN if $XDEBUG_ENABLED; then pecl install xdebug \
     ; fi
 
 WORKDIR /var/www/html
-# Copy Symfony Console project files
-COPY . /var/www/html
-COPY /bin/console /var/www/html/bin/console
