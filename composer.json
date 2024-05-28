@@ -13,7 +13,8 @@
     "psr-4": {
       "App\\": "src/",
       "CarMaster\\": "src/CarMaster",
-      "Eloquent\\": "src/Eloquent"
+      "Eloquent\\": "src/Eloquent",
+      "Controller\\": "src/Controller"
     },
     "classmap": [
       "src"
