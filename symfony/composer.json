@@ -1,6 +1,14 @@
 {
+    "name": "krylaangel/php-pro",
+    "description": "Demo project for the homework course of the php-pro course\n",
     "type": "project",
     "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mariya Nesterenko",
+            "email": "krylaangel@gmail.com"
+        }
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -11,6 +19,7 @@
         "doctrine/doctrine-bundle": "^2.12",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.2",
+        "fakerphp/faker": "*",
         "phpdocumentor/reflection-docblock": "^5.4",
         "phpstan/phpdoc-parser": "^1.29",
         "symfony/asset": "7.0.*",
@@ -55,8 +64,15 @@
     },
     "autoload": {
         "psr-4": {
+            "CarMaster\\": "src/CarMaster",
             "App\\": "src/"
-        }
+        },
+        "classmap": [
+            "src"
+        ],
+        "files": [
+            "src/CarMaster/Write_files/paths_constants.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\CarMaster\Manager;
+
+use App\CarMaster\Entity\Car;
+use App\CarMaster\Entity\CarOwner;
+use App\CarMaster\Entity\Validator;
+use App\CarMaster\Entity\Vehicle;
+use Doctrine\ORM\EntityManagerInterface;
+use Faker\Generator;
+
+readonly class VehicleManager
+{
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private Generator $faker
+    ) {
+    }
+    /*
+        * создаем новое транспортное средство по существующему в базе владельцу.
+        */
+    public function createVehicleByOwner(CarOwner $owner): Vehicle
+    {
+        $bodyTypes = ['Sedan', 'SUV', 'Hatchback', 'Coupe', 'Convertible', 'Van', 'Truck', 'Wagon'];
+        $validator = new Validator();
+        $car = new Car(
+            $this->faker->regexify('^([A-Z]{2}\d{4}[A-Z]{2})$'),
+            $this->faker->numberBetween(1980, date('Y')),
+            $this->faker->company(),
+            $this->faker->randomElement($bodyTypes),
+            $validator
+        );
+        $car->setOwner($owner);
+        $this->entityManager->persist($car);
+        $this->entityManager->flush();
+        return $car;
+    }
+
+}
