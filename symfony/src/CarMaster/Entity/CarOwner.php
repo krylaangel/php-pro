@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, OneToMany, Table};
 
 use const CarMaster\Write_files\OWNER_CARS_INFO;
 
-#[Entity]
+#[Entity ]
 #[Table(name: 'car_owner')]
 class CarOwner
 {

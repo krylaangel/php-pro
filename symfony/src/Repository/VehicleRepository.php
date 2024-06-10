@@ -18,20 +18,14 @@ class VehicleRepository extends ServiceEntityRepository
     /*
         * поиск машин по номеру телефона владельца
         */
-    public function findCarByOwner(int $contactNumber): array
+    public function findVehiclesByOwner(int $contactNumber): array
     {
         $queryBuilder = $this->createQueryBuilder('v')
             ->join('v.owner', 'o')
             ->where('o.contactNumber =:phone_number');
         $query = $queryBuilder->getQuery()
             ->setParameter('phone_number', $contactNumber);
-        $vehicles = $query->getResult();
-        $result = [];
-        foreach ($vehicles as $vehicle) {
-            $vehicleInfo = $vehicle->getInformation();
-            $result [] = $vehicleInfo;
-        }
-        return $result;
+        return $query->getResult();
     }
 
 }

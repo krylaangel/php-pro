@@ -20,9 +20,9 @@ class VehicleController extends AbstractController
      */
     public function find(
         int $contactNumber,
-        VehicleRepository $vehicleRepository
+        VehicleManager $vehicleManager
     ): Response {
-        $findCarByOwner = $vehicleRepository->findCarByOwner($contactNumber);
+        $findCarByOwner = $vehicleManager->getVehiclesInfoByOwner($contactNumber);
         if (!empty($findCarByOwner)) {
             return new JsonResponse($findCarByOwner);
         }

@@ -7,7 +7,7 @@ namespace App\CarMaster\Command;
 use App\CarMaster\Entity\Exception\FormatException;
 use App\CarMaster\Entity\Exception\InputException;
 use App\CarMaster\Entity\Vehicle;
-use App\CarMaster\Manager\SpareManager;
+use App\CarMaster\Manager\SparePartManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Exception\ORMException;
@@ -24,7 +24,7 @@ class CreateSparePart extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly SpareManager $spareManager
+        private readonly SparePartManager $spareManager
     ) {
         parent::__construct();
     }

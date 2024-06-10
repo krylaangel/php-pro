@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Command;
 
+use App\CarMaster\Manager\SparePartManager;
 use App\CarMaster\Manager\VehicleManager;
 use App\Repository\SparePartRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class FindSparePartForVehicle extends Command
 {
     public function __construct(
-        private readonly SparePartRepository $sparePartRepository
+        private readonly SparePartManager $sparePartManager
     ) {
         parent::__construct();
     }
@@ -35,7 +36,7 @@ class FindSparePartForVehicle extends Command
         $styledOutput = new SymfonyStyle($input, $output);
         $licensePlate = $input->getArgument('license_plate');
         try {
-            $findSpare = $this->sparePartRepository->findPartForCar($licensePlate);
+            $findSpare = $this->sparePartManager->getFindPartsForCar($licensePlate);
             if (empty($findSpare)) {
                 $styledOutput->error("No spare parts found for license plate '{$licensePlate}'");
                 return Command::FAILURE;

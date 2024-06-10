@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\CarMaster\Manager\SparePartManager;
 use App\Repository\SparePartRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,9 +15,9 @@ class PartController extends AbstractController
     /*
      * поиск запчастей для конкретной машины, если мы знаем ее номер лицензии
      */
-    public function find(string $licensePlate, SparePartRepository $sparePartRepository): Response
+    public function find(string $licensePlate, SparePartManager $sparePartManager): Response
     {
-        $findCarByOwner = $sparePartRepository->findPartForCar($licensePlate);
+        $findCarByOwner = $sparePartManager->getFindPartsForCar($licensePlate);
         if (!empty($findCarByOwner)) {
             return new JsonResponse($findCarByOwner);
         }
