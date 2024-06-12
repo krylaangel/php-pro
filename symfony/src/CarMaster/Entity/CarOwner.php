@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity;
 
-use App\CarMaster\Entity\Exception\FileOperationException;
-use App\Repository\OwnerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, OneToMany, Table};
 
-use const CarMaster\Write_files\OWNER_CARS_INFO;
 
-#[Entity ]
+#[Entity]
 #[Table(name: 'car_owner')]
 class CarOwner
 {
@@ -35,7 +32,7 @@ class CarOwner
     #[Column(name: 'phone_number', type: Types::BIGINT)]
     private int $contactNumber;
 
-    #[OneToMany(targetEntity: Vehicle::class, mappedBy: 'owner', cascade: ["persist"] )]
+    #[OneToMany(targetEntity: Vehicle::class, mappedBy: 'owner', cascade: ["persist"])]
     protected Collection $vehicleInfo;
 
 
@@ -67,47 +64,6 @@ class CarOwner
         ];
     }
 
-    public function writeOwnerInfoToFile(string $filenameCarOwner): void
-    {
-        $ownerInfo = $this->getOwnerInfo();
-        $json_data = json_encode($ownerInfo, JSON_PRETTY_PRINT);
-        file_put_contents($filenameCarOwner, $json_data);
-    }
-
-// находит только машины определенного владельца, создает массив
-
-    public function findOwnerCars(): array
-    {
-        $findOwner = $this->getFirstName() . $this->getLastName();
-        $findCar = [];
-        foreach ($this->getVehicleInfo() as $vehicleInfo) {
-            if ($vehicleInfo instanceof Car) {
-                $findCar[] = $vehicleInfo->getInformation();
-            }
-        }
-        return [
-            'Owner' => $findOwner,
-            'Cars' => $findCar
-        ];
-    }
-
-    /**
-     * записывает в файл инфо, полученную из метода findOwnerCars и возвращает ошибки
-     * @throws FileOperationException
-     */
-    public function writeOwnerCarsInfo(): void
-    {
-        $jsonString = json_encode($this->findOwnerCars(), JSON_PRETTY_PRINT);
-        if ($jsonString !== false) {
-            $result = file_put_contents(OWNER_CARS_INFO, $jsonString);
-            if ($result === false) {
-                throw new FileOperationException("Ошибка при записи в файл: OWNER_CARS_INFO;");
-            }
-        } else {
-            throw new FileOperationException("Ошибка кодирования JSON");
-        }
-    }
-
     public function addVehicle(Vehicle $vehicleInfo): void
     {
         $this->vehicleInfo[] = $vehicleInfo;
@@ -118,7 +74,7 @@ class CarOwner
         return $this->vehicleInfo;
     }
 
-       /**
+    /**
      * @return string
      */
     public function getFirstName(): string

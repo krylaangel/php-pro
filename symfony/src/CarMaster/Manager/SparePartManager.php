@@ -22,7 +22,7 @@ readonly class SparePartManager
     /*
         * создаем новую запчасть для конкретной машины.
         */
-    public function createSpareByVehicle(Vehicle $vehicle): SparePart
+    public function createPartByVehicle(Vehicle $vehicle): SparePart
     {
 
         $validator = new Validator();
@@ -40,7 +40,7 @@ readonly class SparePartManager
 
     }
 
-    public function getFindPartsForCar(string $licensePlate)
+    public function getFindPartsForCar(string $licensePlate):array
     {
         $spareParts=$this->sparePartRepository->findPartsForCar($licensePlate);
         $result = [];

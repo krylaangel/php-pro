@@ -20,6 +20,7 @@ use Doctrine\ORM\Mapping\{Column,
     JoinTable,
     ManyToMany,
     ManyToOne,
+    OneToMany,
     Table};
 
 #[Entity(repositoryClass: VehicleRepository::class)]
@@ -55,14 +56,21 @@ abstract class Vehicle
     #[InverseJoinColumn(name: 'spare_part_id', referencedColumnName: 'spare_part_id')]
     private Collection $spareParts;
 
+    #[OneToMany(targetEntity: ServiceOrder::class, mappedBy: 'vehicle', cascade: ["persist"])]
+    protected Collection $orders;
+
+
     public function __construct(
         string $licensePlate,
         int $yearManufacture,
         string $brand,
         Validator $validator
+
     ) {
         $this->validator = $validator;
         $this->spareParts = new ArrayCollection();
+        $this->orders = new ArrayCollection();
+
         $this->setLicensePlate($licensePlate);
         $this->setYearManufacture($yearManufacture);
         $this->setBrand($brand);
@@ -77,11 +85,6 @@ abstract class Vehicle
         ];
     }
 
-    abstract public function addSparePart(SparePart $partInfo);
-
-    abstract public function getAllSpareParts();
-
-    abstract public function writeInfoEquipment(string $filename): void;
 //    для установки связи по внешнему ключу для владельца. Используем в команде - создать машину так,
 //чтобы сразу связать и новосозданную машину и уже существующего владельца. Предполагается, что сначала
 //идет регистрация владельца, а потом машины
@@ -91,8 +94,7 @@ abstract class Vehicle
         $this->owner = $owner;
     }
 
-//    для установки связи в линковочной таблицы -
-//для команды создать запчасть, чтобы сразу соотв.определенной машине и наоборот
+
 
     public function addSpareParts(SparePart $sparePart): void
     {

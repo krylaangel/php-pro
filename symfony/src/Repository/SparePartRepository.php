@@ -14,6 +14,9 @@ class SparePartRepository extends ServiceEntityRepository
         parent::__construct($registry, SparePart::class);
     }
 
+    /*
+     * ищем запчасти по машине
+     */
     public function findPartsForCar(string $licensePlate): array
     {
         $queryBuilder = $this->createQueryBuilder('s')

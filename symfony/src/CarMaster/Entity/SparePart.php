@@ -8,7 +8,7 @@ use App\Repository\SparePartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, ManyToMany, Table};
+use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, ManyToMany, OneToMany, Table};
 
 #[Entity(repositoryClass: SparePartRepository::class)]
 #[Table(name: 'spare_part')]
@@ -18,7 +18,7 @@ class SparePart
     #[Id]
     #[GeneratedValue]
     #[Column(name: 'spare_part_id', type: Types::INTEGER)]
-    protected ?int $partId;
+    protected int $partId;
 
     #[Column(name: 'name_part', length: 60)]
     protected string $namePart;
@@ -32,6 +32,9 @@ class SparePart
     #[ManyToMany(targetEntity: Vehicle::class, mappedBy: 'spareParts')]
     private Collection $vehicles;
 
+    #[OneToMany(targetEntity: OrderItem::class, mappedBy: 'spare_part', cascade: ["persist"])]
+    protected Collection $orderItems;
+
     public function __construct(
         string $namePart,
         string $modelPart,
@@ -40,11 +43,14 @@ class SparePart
     ) {
         $this->validator = $validator;
         $this->vehicles = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
         $this->setNamePart($namePart);
         $this->setModelPart($modelPart);
         $this->setPricePart($pricePart);
     }
-
+    /*
+     * получаем инфо о запчасти
+     */
     public function getPartInfo(): array
     {
         return [
@@ -54,7 +60,9 @@ class SparePart
         ];
     }
 
-
+/*
+ * взаимная связка с транспортными средствами
+ */
     public function addVehicle(Vehicle $vehicle): void
     {
         if (!$this->vehicles->contains($vehicle)) {
@@ -62,8 +70,21 @@ class SparePart
             $vehicle->addSpareParts($this);
         }
     }
-
-    public function getModelPart(): string
+    /*
+     * взаимная связка с таблицей OrderItem
+     */
+    public function addOrderItem(OrderItem $orderItem): void
+    {
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems[] = $orderItem;
+            $orderItem->addSpareParts($this);
+        }
+    }
+    public function getOrderItem(): Collection
+    {
+        return $this->orderItems;
+    }
+       public function getModelPart(): string
     {
         return $this->modelPart;
     }
@@ -99,4 +120,11 @@ class SparePart
         $this->validator->checkMinimumValue($pricePart);
     }
 
+    /**
+     * @return int
+     */
+    public function getPartId(): int
+    {
+        return $this->partId;
+    }
 }
