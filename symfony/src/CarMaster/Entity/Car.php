@@ -45,4 +45,9 @@ class Car extends Vehicle
         $this->bodyType = $bodyType;
         $this->validator->verifyInputFields($bodyType);
     }
+
+    public function jsonSerialize(): array
+    {
+        return $this->getInformation();
+    }
 }

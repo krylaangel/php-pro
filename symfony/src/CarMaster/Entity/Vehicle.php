@@ -28,7 +28,7 @@ use Doctrine\ORM\Mapping\{Column,
 #[InheritanceType('SINGLE_TABLE')]
 #[DiscriminatorColumn(name: 'type', type: 'string')]
 #[DiscriminatorMap(['Car' => Car::class])]
-abstract class Vehicle
+abstract class Vehicle implements \JsonSerializable
 
 {
     protected Validator $validator;

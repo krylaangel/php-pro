@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, OneToMany, Table};
 
 #[Entity]
 #[Table(name: 'car_owner')]
-class CarOwner
+class CarOwner implements \JsonSerializable
 {
     protected Validator $validator;
 
@@ -141,5 +141,10 @@ class CarOwner
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->getOwnerInfo();
     }
 }

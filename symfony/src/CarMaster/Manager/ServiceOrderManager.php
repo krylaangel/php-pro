@@ -8,7 +8,9 @@ use App\CarMaster\Entity\OrderItem;
 use App\CarMaster\Entity\ServiceOrder;
 use App\CarMaster\Entity\SparePart;
 use App\CarMaster\Entity\Vehicle;
+use App\CarMaster\Service\ServiceCostCalculator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
 use Faker\Generator;
 
 readonly class ServiceOrderManager
@@ -16,7 +18,8 @@ readonly class ServiceOrderManager
 
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private Generator $faker
+        private Generator $faker,
+        private ServiceCostCalculator $serviceCostCalculator
     ) {
     }
 
@@ -34,6 +37,7 @@ readonly class ServiceOrderManager
         $this->entityManager->flush();
         return $order;
     }
+
     /*
      * наполняем его деталями, суммирую количество однотипных через функцию updateOrderQuantities
      */
@@ -65,32 +69,46 @@ readonly class ServiceOrderManager
                     return 0;
                 }
             }
-        } $orderItem = new OrderItem($serviceOrder, $sparePart, $quantity);
+        }
+        $orderItem = new OrderItem($serviceOrder, $sparePart, $quantity);
         $serviceOrder->addOrderItem($orderItem);
         $this->entityManager->persist($orderItem);
         return $quantity;
     }
 
-
-    public function calculateTotalCost(ServiceOrder $serviceOrder): float
-    {
-        $totalCost = 0;
-        foreach ($serviceOrder->getOrderItems() as $orderItem) {
-            $totalCost+=$orderItem->getSparePart()->getPricePart() * $orderItem->getQuantity();
-        }
-        return $totalCost;
-    }
-
     /**
-     * @throws \Exception
+     * @throws EntityNotFoundException
      */
-    public function calculateTotalCostById(int $orderName): float
+    public function findTotalCostById($orderName): ServiceOrder
     {
         $serviceOrder = $this->entityManager->getRepository(ServiceOrder::class)->findOneBy(['orderName' => $orderName]
         );
         if (!$serviceOrder) {
-            throw new \Exception ('not found order');
+            throw new EntityNotFoundException ('not found order');
         }
-        return $this->calculateTotalCost($serviceOrder);
+        return $serviceOrder;
+    }
+
+    /**
+     * @throws EntityNotFoundException
+     */
+    public function calculateTotalCostById(int $orderName): float
+    {
+        $serviceOrder=$this->findTotalCostById($orderName);
+        return $this->serviceCostCalculator->ServiceCostCalculator($serviceOrder);
+    }
+
+    public function getDetailsAboutOrder($orderName): array
+    {
+        $serviceOrder = $this->findTotalCostById($orderName);
+        $totalCost = $this->calculateTotalCostById($orderName);
+        $vehicle = $serviceOrder->getVehicle();
+
+        return [
+            'Order number' => $serviceOrder->getOrderName(),
+            'Brand vehicle' => $vehicle->getBrand(),
+            'License vehicle' => $vehicle->getLicensePlate(),
+            'Total cost' => $totalCost
+        ];
     }
 }

@@ -44,7 +44,14 @@ class ServiceOrder
     }
 
     /*
-     * взаимная связка с транспортными средствами
+     * Возвращает транспортное средство, связанное с этим заказом
+     */
+    public function getVehicle(): Vehicle
+    {
+        return $this->vehicle;
+    }
+    /*
+     *устанавливает транспортное средство, связанное с этим заказом
      */
     public function setVehicle(Vehicle $vehicle): void
     {

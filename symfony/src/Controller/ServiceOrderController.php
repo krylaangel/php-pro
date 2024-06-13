@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\CarMaster\Manager\ServiceOrderManager;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,12 +11,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class ServiceOrderController extends AbstractController
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    #[Route('/service/{orderName}', name: 'app_calc_service_order')]
-    public function calc(ServiceOrderManager $serviceOrderManager, int $orderName): JsonResponse
+    #[Route('/service_order/calculate/{orderName}', name: 'app_calc_service_order', methods: ['GET'])]
+    public function calculate(ServiceOrderManager $serviceOrderManager, int $orderName): JsonResponse
     {
-        $totalCost = $serviceOrderManager->calculateTotalCostById($orderName);
-        return new JsonResponse(['total_cost' => $totalCost]);
+        return new JsonResponse($serviceOrderManager->getDetailsAboutOrder($orderName));
     }
 }

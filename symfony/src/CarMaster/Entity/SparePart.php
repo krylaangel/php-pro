@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, ManyToMany, OneToM
 
 #[Entity(repositoryClass: SparePartRepository::class)]
 #[Table(name: 'spare_part')]
-class SparePart
+class SparePart implements \JsonSerializable
 {
     protected Validator $validator;
     #[Id]
@@ -126,5 +126,10 @@ class SparePart
     public function getPartId(): int
     {
         return $this->partId;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return $this->getPartInfo();
     }
 }

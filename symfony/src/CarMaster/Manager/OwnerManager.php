@@ -16,6 +16,7 @@ readonly class OwnerManager
         private Generator $faker
     ) {
     }
+
     /*
      * создаем нового владельца
      */
