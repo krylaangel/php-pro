@@ -23,7 +23,7 @@ class PartController extends AbstractController
             return new JsonResponse($parts);
         }
         return new JsonResponse([
-            'error' => 'Owner has not vehicle'
+            'error' => 'Part not found'
         ], Response::HTTP_NOT_FOUND);
     }
 }

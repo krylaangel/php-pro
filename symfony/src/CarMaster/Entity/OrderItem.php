@@ -6,7 +6,7 @@ namespace App\CarMaster\Entity;
 
 
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, JoinColumn, ManyToOne, OneToMany, Table};
+use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, JoinColumn, ManyToOne, Table};
 
 
 #[Entity]

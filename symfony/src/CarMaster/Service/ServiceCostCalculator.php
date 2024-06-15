@@ -2,19 +2,17 @@
 
 namespace App\CarMaster\Service;
 
-use App\CarMaster\Entity\Interface\ServiceCostCalculatorInterface;
-use App\CarMaster\Entity\ServiceOrder;
-
-class ServiceCostCalculator implements ServiceCostCalculatorInterface
+class ServiceCostCalculator implements CostCalculatorInterface
 {
-    public function serviceCostCalculator(ServiceOrder $serviceOrder): float
+    public function calculateTotalCost(CalculableInterface $calculable): float
     {
-        {
-            $totalCost = 0;
-            foreach ($serviceOrder->getOrderItems() as $orderItem) {
-                $totalCost += $orderItem->getSparePart()->getPricePart() * $orderItem->getQuantity();
-            }
-            return $totalCost;
-        }
+        // встроенная функция, которая принимает параметром нужный массив (проходит по каждому элементу)
+        // и анонимную функцию, определеющую накопленное значение суммы элементов массива ($carry)
+        // и текущий элемент массива $item,
+        // + начальное значение $carry=0
+        return array_reduce($calculable->getItems(), function ($carry, $item) {
+            return $carry + $item->getSparePart()->getPricePart() * $item->getQuantity();
+        }, 0);
     }
+
 }

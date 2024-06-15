@@ -40,9 +40,9 @@ class OwnerController extends AbstractController
             return new JsonResponse([
                 'error' => 'Owner already exists',
                 'owner' => $owner->getOwnerInfo()
-            ], Response::HTTP_NOT_FOUND);
+            ], Response::HTTP_CONFLICT);
         }
-        return new JsonResponse($ownerManager->createOwner()->getOwnerInfo());
+        return new JsonResponse($ownerManager->createOwner()->getOwnerInfo(), Response::HTTP_CREATED);
     }
 
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity;
 
-use App\Repository\OrderRepository;
+use App\CarMaster\Service\CalculableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -19,15 +19,15 @@ use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
 #[Table(name: 'service_order')]
-class ServiceOrder
+class ServiceOrder implements CalculableInterface
 {
     #[Id]
     #[GeneratedValue]
     #[Column(name: 'id_order', type: Types::INTEGER)]
     protected int $idOrder;
 
-    #[Column(type: Types::INTEGER)]
-    private int $orderName;
+    #[Column(name: 'order_number', type: Types::INTEGER)]
+    private int $orderNumber;
 
     #[ManyToOne(targetEntity: Vehicle::class, inversedBy: 'orders')]
     #[JoinColumn(name: 'vehicle_id', referencedColumnName: 'vehicle_id')]
@@ -36,10 +36,10 @@ class ServiceOrder
     #[OneToMany(targetEntity: OrderItem::class, mappedBy: 'serviceOrder', cascade: ["persist"])]
     protected Collection $orderItems;
 
-    public function __construct(Vehicle $vehicle, int $orderName)
+    public function __construct(Vehicle $vehicle, int $orderNumber)
     {
         $this->vehicle = $vehicle;
-        $this->setOrderName($orderName);
+        $this->setOrderNumber($orderNumber);
         $this->orderItems = new ArrayCollection();
     }
 
@@ -50,6 +50,7 @@ class ServiceOrder
     {
         return $this->vehicle;
     }
+
     /*
      *устанавливает транспортное средство, связанное с этим заказом
      */
@@ -71,7 +72,7 @@ class ServiceOrder
     }
 
     /**
-     * @return Collection
+     * @return Collection Коллекция объектов OrderItem для текущего ордера.
      */
     public function getOrderItems(): Collection
     {
@@ -79,18 +80,51 @@ class ServiceOrder
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getOrderName(): int
+    public function getOrderNumber(): int
     {
-        return $this->orderName;
+        return $this->orderNumber;
+    }
+
+    /*
+        * суммируем количество однотипных деталей - перебираем массив, для каждого $orderItem в массиве ордеров
+        * проверяем есть ли деталь по ее айди в orderItem и в зависимости от того, есть или нет либо суммируем заданное
+        * количество к уже существующему либо создаем новый orderItem и записываем туда переданное количество
+        */
+    public function updateOrderQuantities(SparePart $sparePart, int $quantity): int
+    {
+        foreach ($this->getOrderItems() as $orderItem) {
+            if ($orderItem->getSparePart()->getPartId() === $sparePart->getPartId()) {
+                if ($quantity !== 0) {
+                    $newQuantity = $orderItem->getQuantity() + $quantity;
+                    $orderItem->setQuantity($newQuantity);
+                    return $newQuantity;
+                } else {
+                    $this->orderItems->removeElement($orderItem);
+                    return 0;
+                }
+            }
+        }
+        $orderItem = new OrderItem($this, $sparePart, $quantity);
+        $this->addOrderItem($orderItem);
+        return $quantity;
     }
 
     /**
-     * @param string $orderName
+     * @param int $orderNumber
      */
-    public function setOrderName(int $orderName): void
+    public function setOrderNumber(int $orderNumber): void
     {
-        $this->orderName = $orderName;
+        $this->orderNumber = $orderNumber;
+    }
+
+    /*
+     * реализация метода интерфейса на получения Items через Collection $orderItems
+     * и преобразование в массив встроенной функцией коллекции
+     */
+    public function getItems(): array
+    {
+        return $this->orderItems->toArray();
     }
 }
