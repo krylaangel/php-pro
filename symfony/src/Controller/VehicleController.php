@@ -14,27 +14,27 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class VehicleController extends AbstractController
 {
-    #[Route('/vehicle/{contactNumber}', name: 'app_find_vehicle')]
-    /*
-     * поиск машин по номеру телефона владельца
+    /**
+     * Поиск машин по номеру телефона владельца
      */
+    #[Route('/vehicle/{contactNumber}', name: 'app_find_vehicle', methods: ['GET'])]
     public function find(
         int $contactNumber,
-        VehicleRepository $vehicleRepository
+        VehicleManager $vehicleManager
     ): Response {
-        $findCarByOwner = $vehicleRepository->findCarByOwner($contactNumber);
+        $findCarByOwner = $vehicleManager->getVehiclesInfoByOwner($contactNumber);
         if (!empty($findCarByOwner)) {
             return new JsonResponse($findCarByOwner);
         }
-        return $this->json([
-            'error' => 'Owner has not vehicle',
-        ], Response::HTTP_CONFLICT);
+        return new JsonResponse([
+            'error' => 'Owner has no vehicle',
+        ], Response::HTTP_NOT_FOUND);
     }
-    #[Route('/vehicle/create/{contactNumber}', name: 'app_creat_vehicle')]
 
-    /*
-     * создание машины по владельцу, зная его номер телефона
+    /**
+     * Создание машины по владельцу, зная его номер телефона
      */
+    #[Route('/vehicle/create/{contactNumber}', name: 'app_create_vehicle', methods: ['GET'])]
     public function create(
         int $contactNumber,
         EntityManagerInterface $entityManager,
@@ -44,8 +44,8 @@ class VehicleController extends AbstractController
         if (!empty($owner)) {
             return new JsonResponse($vehicleManager->createVehicleByOwner($owner)->getInformation());
         }
-        return $this->json([
+        return new JsonResponse([
             'error' => 'Number not found',
-        ], Response::HTTP_CONFLICT);
+        ], Response::HTTP_NOT_FOUND);
     }
 }

@@ -8,6 +8,7 @@ use App\CarMaster\Entity\Car;
 use App\CarMaster\Entity\CarOwner;
 use App\CarMaster\Entity\Validator;
 use App\CarMaster\Entity\Vehicle;
+use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator;
 
@@ -15,9 +16,11 @@ readonly class VehicleManager
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private Generator $faker
+        private Generator $faker,
+        private VehicleRepository $vehicleRepository
     ) {
     }
+
     /*
         * создаем новое транспортное средство по существующему в базе владельцу.
         */
@@ -38,4 +41,14 @@ readonly class VehicleManager
         return $car;
     }
 
+    public function getVehiclesInfoByOwner(int $contactNumber): array
+    {
+        $vehicles = $this->vehicleRepository->findVehiclesByOwner($contactNumber);
+        $result = [];
+        foreach ($vehicles as $vehicle) {
+            $vehicleInfo = $vehicle->getInformation();
+            $result [] = $vehicleInfo;
+        }
+        return $result;
+    }
 }

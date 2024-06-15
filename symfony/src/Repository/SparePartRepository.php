@@ -14,19 +14,17 @@ class SparePartRepository extends ServiceEntityRepository
         parent::__construct($registry, SparePart::class);
     }
 
-    public function findPartForCar(string $licensePlate): array
+    /*
+     * ищем запчасти по машине
+     */
+    public function findPartsForCar(string $licensePlate): array
     {
         $queryBuilder = $this->createQueryBuilder('s')
             ->join('s.vehicles', 'v')
             ->where('v.licensePlate = :license_plate');
         $query = $queryBuilder->getQuery()
             ->setParameter('license_plate', $licensePlate);
-        $spareParts = $query->getResult();
-        $result = [];
-        foreach ($spareParts as $sparePart) {
-            $partInfo = $sparePart->getPartInfo();
-            $result [] = $partInfo;
-        }
-        return $result;
+        return $query->getResult();
+
     }
 }
