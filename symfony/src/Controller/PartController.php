@@ -64,7 +64,7 @@ class PartController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
     ): Response {
-        $sparePart = new SparePart(); // Измените на ваши дефолтные значения
+        $sparePart = new SparePart();
         $form = $this->createForm(PartType::class, $sparePart);
         $form->handleRequest($request);
 
