@@ -93,15 +93,21 @@ abstract class Vehicle implements \JsonSerializable
     {
         $this->owner = $owner;
     }
-
-
-
     public function addSpareParts(SparePart $sparePart): void
     {
         if (!$this->spareParts->contains($sparePart)) {
             $this->spareParts[] = $sparePart;
             $sparePart->addVehicle($this);
         }
+    }
+    public function getSpareParts(): Collection
+    {
+        return $this->spareParts;
+    }
+    public function removeSparePart(SparePart $sparePart): void
+    {
+        $this->spareParts->removeElement($sparePart);
+        $sparePart->removeVehicle($this);
     }
 
    public function getLicensePlate(): string
