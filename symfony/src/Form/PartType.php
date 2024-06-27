@@ -51,6 +51,8 @@ class PartType extends AbstractType
                 'choice_label' => 'brand',
                 'placeholder' => 'Choose vehicles',
                 'multiple' => true, // Для выбора нескольких транспортных средств
-                'required' => true]);
+                'required' => true,
+                'by_reference' => false])
+        ;
     }
     }

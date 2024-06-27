@@ -17,6 +17,7 @@
             <div class="part-info">
                 <div>
                     <div class="part-name">{{ part.namePart }}</div>
+                    <span class="part-label"><b>Vendor code spare part: </b></span>{{ part.PartId }}<br>
                     <div class="part-vehicle"><b>For vehicle: </b>{% for vehicle in part.vehicles %}
                             {{ vehicle.brand }}                         {% endfor %}
                     </div>

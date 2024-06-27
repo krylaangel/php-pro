@@ -7,7 +7,7 @@
             <div class="part-vehicle"><b>For vehicle: </b>{% for vehicle in part.vehicles %}
                     {{ vehicle.brand }}                         {% endfor %}
             </div>
-
+            <span class="part-label"><b>Vendor code spare part: </b></span>{{ part.PartId }}<br>
             <span class="part-label"><b>Model spare part: </b></span>{{ part.modelPart }}<br>
             <span class="part-label"><b>Price spare part: </b></span>{{ part.pricePart }}<br>
 
@@ -16,7 +16,7 @@
     <div class="part-actions">
         <a class="pure-button" href="{{ path('app_all_parts') }}">&larr;All parts</a>
         <a class="pure-button" href="{{ path('app_part_delete', {'partId': part.partId }) }}"
-             onclick="return confirm('Delete part {{ part.namePart }}?')">Delete</a>
+           onclick="return confirm('Delete part {{ part.namePart }}?')">Delete</a>
         <a class="pure-button" href="{{ path('app_update_part', {'partId': part.partId }) }}">Update</a>
 
     </div>

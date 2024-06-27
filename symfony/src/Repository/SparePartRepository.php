@@ -39,4 +39,5 @@ class SparePartRepository extends ServiceEntityRepository
             ->setMaxResults(self::PARTS_PER_PAGE)
             ->getResult();
     }
-}
+
+    }

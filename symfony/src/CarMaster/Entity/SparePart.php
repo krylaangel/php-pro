@@ -34,22 +34,16 @@ class SparePart implements JsonSerializable
     #[Assert\GreaterThan(value: 0)]
     protected float $pricePart;
 
-    #[ManyToMany(targetEntity: Vehicle::class, mappedBy: 'spareParts')]
+    #[ManyToMany(targetEntity: Vehicle::class, mappedBy: 'spareParts', cascade: ["persist"])]
     private Collection $vehicles;
 
     #[OneToMany(targetEntity: OrderItem::class, mappedBy: 'spare_part', cascade: ["persist"])]
     protected Collection $orderItems;
 
-    public function __construct(
-//        string $namePart,
-//        string $modelPart,
-//        float $pricePart
-    ) {
+    public function __construct()
+    {
         $this->vehicles = new ArrayCollection();
         $this->orderItems = new ArrayCollection();
-//        $this->setNamePart($namePart);
-//        $this->setModelPart($modelPart);
-//        $this->setPricePart($pricePart);
     }
 
     /*
@@ -67,26 +61,29 @@ class SparePart implements JsonSerializable
     /*
      * взаимная связка с транспортными средствами
      */
-    public function addVehicle(Vehicle $vehicle): void
+    public function addVehicle(Vehicle $vehicle): self
     {
         if (!$this->vehicles->contains($vehicle)) {
             $this->vehicles[] = $vehicle;
             $vehicle->addSpareParts($this);
         }
+        return  $this;
     }
 
     public function getVehicles(): Collection
     {
         return $this->vehicles;
     }
-    public function removeVehicle(Vehicle $vehicle): void
-    {
-        $this->vehicles->removeElement($vehicle);
+
+    public function removeVehicle(Vehicle $vehicle): self
+    {$this->vehicles->removeElement($vehicle);
         $vehicle->removeSparePart($this);
+
+        return $this;
     }
-    /*
-     * взаимная связка с таблицей OrderItem
-     */
+        /*
+ * взаимная связка с таблицей OrderItem
+ */
     public function addOrderItem(OrderItem $orderItem): void
     {
         if (!$this->orderItems->contains($orderItem)) {

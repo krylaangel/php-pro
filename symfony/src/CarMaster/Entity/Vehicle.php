@@ -50,7 +50,7 @@ abstract class Vehicle implements \JsonSerializable
     #[ManyToOne(targetEntity: CarOwner::class, inversedBy: 'vehicles')]
     #[JoinColumn(name: 'owner_id', referencedColumnName: 'owner_id')]
     private CarOwner $owner;
-    #[ManyToMany(targetEntity: SparePart::class, inversedBy: 'vehicles')]
+    #[ManyToMany(targetEntity: SparePart::class, inversedBy: 'vehicles', cascade: ["persist"])]
     #[JoinTable(name: 'car_spares_parts')]
     #[JoinColumn(name: 'vehicle_id', referencedColumnName: 'vehicle_id')]
     #[InverseJoinColumn(name: 'spare_part_id', referencedColumnName: 'spare_part_id')]
@@ -58,7 +58,6 @@ abstract class Vehicle implements \JsonSerializable
 
     #[OneToMany(targetEntity: ServiceOrder::class, mappedBy: 'vehicle', cascade: ["persist"])]
     protected Collection $orders;
-
 
     public function __construct(
         string $licensePlate,
@@ -104,10 +103,13 @@ abstract class Vehicle implements \JsonSerializable
     {
         return $this->spareParts;
     }
-    public function removeSparePart(SparePart $sparePart): void
+    public function removeSparePart(SparePart $sparePart): self
     {
-        $this->spareParts->removeElement($sparePart);
-        $sparePart->removeVehicle($this);
+        if ($this->spareParts->removeElement($sparePart)) {
+            $sparePart->removeVehicle($this);
+        }
+
+        return $this;
     }
 
    public function getLicensePlate(): string
