@@ -27,6 +27,19 @@ class VehicleRepository extends ServiceEntityRepository
             ->setParameter('phone_number', $contactNumber);
         return $query->getResult();
     }
+    /*
+     * ищем машины по запчасти
+     */
+
+    public function getVehicleInPart(int $partId): array
+    {
+        $queryBuilder = $this->createQueryBuilder('v')
+            ->join('v.spareParts', 's')
+            ->where('s.partId = :spare_part_id');
+        $query = $queryBuilder->getQuery()
+            ->setParameter('spare_part_id', $partId);
+        return $query->getResult();
+    }
 
 }
 

@@ -6,6 +6,7 @@ namespace App\CarMaster\Manager;
 
 use App\CarMaster\Entity\Car;
 use App\CarMaster\Entity\CarOwner;
+use App\CarMaster\Entity\Enum\BodyTypes;
 use App\CarMaster\Entity\Validator;
 use App\CarMaster\Entity\Vehicle;
 use App\Repository\VehicleRepository;
@@ -26,13 +27,13 @@ readonly class VehicleManager
         */
     public function createVehicleByOwner(CarOwner $owner): Vehicle
     {
-        $bodyTypes = ['Sedan', 'SUV', 'Hatchback', 'Coupe', 'Convertible', 'Van', 'Truck', 'Wagon'];
         $validator = new Validator();
+        $randomBodyType = $this->faker->randomElement(BodyTypes::toArray());
         $car = new Car(
             $this->faker->regexify('^([A-Z]{2}\d{4}[A-Z]{2})$'),
             $this->faker->numberBetween(1980, date('Y')),
             $this->faker->company(),
-            $this->faker->randomElement($bodyTypes),
+            [$randomBodyType],
             $validator
         );
         $car->setOwner($owner);

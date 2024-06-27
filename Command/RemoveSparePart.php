@@ -14,13 +14,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'app:remove-spare-part', description: 'remove spare parts')]
+#[AsCommand(name: 'app:remove-spare-parts', description: 'remove spare parts')]
 
 class RemoveSparePart extends Command
 {
     protected function configure(): void
     {
-        $this->setName('app:remove-spare-part')
+        $this->setName('app:remove-spare-parts')
             ->setDescription('remove spare parts')
             ->addArgument('spare_part_id', InputArgument::REQUIRED, 'spare_part_id');
     }
@@ -34,7 +34,7 @@ class RemoveSparePart extends Command
             $sparePart = $sparePartRepository->findOneBy(['partId' => $partId = $input->getArgument('spare_part_id')]);
 
             if (!$sparePart) {
-                throw new EntityNotFoundException("Can not find c spare part with spare_part_id $partId");
+                throw new EntityNotFoundException("Can not find c spare parts with spare_part_id $partId");
             } else {
                 $entityManager->remove($sparePart);
                 $entityManager->flush();
@@ -44,8 +44,8 @@ class RemoveSparePart extends Command
             return Command::FAILURE;
         }
         $styledOutput = new SymfonyStyle($input, $output);
-        $styledOutput->title("Spare part removed:");
-        $styledOutput->writeln("spare part id: {$partId}");
+        $styledOutput->title("Spare parts removed:");
+        $styledOutput->writeln("spare parts id: {$partId}");
         return Command::SUCCESS;
     }
 }

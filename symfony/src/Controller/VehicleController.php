@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\CarMaster\Entity\CarOwner;
 use App\CarMaster\Manager\VehicleManager;
-use App\Repository\VehicleRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

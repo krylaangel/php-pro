@@ -23,7 +23,6 @@ services:
         resource: '../src/CarMaster/'
         exclude:
             - '../src/CarMaster/Entity/'
-            - '../src/CarMaster/Write_files/'
 
     Faker\Generator:
         factory: ['Faker\Factory', 'create']
