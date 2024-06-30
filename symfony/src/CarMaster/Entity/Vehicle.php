@@ -31,8 +31,6 @@ use Doctrine\ORM\Mapping\{Column,
 abstract class Vehicle implements \JsonSerializable
 
 {
-    protected Validator $validator;
-
     #[Id]
     #[GeneratedValue]
     #[Column(name: 'vehicle_id', type: Types::INTEGER)]
@@ -63,16 +61,14 @@ abstract class Vehicle implements \JsonSerializable
         string $licensePlate,
         int $yearManufacture,
         string $brand,
-        Validator $validator
-
+        CarOwner $owner
     ) {
-        $this->validator = $validator;
-        $this->spareParts = new ArrayCollection();
-        $this->orders = new ArrayCollection();
-
         $this->setLicensePlate($licensePlate);
         $this->setYearManufacture($yearManufacture);
         $this->setBrand($brand);
+        $this->owner = $owner;
+        $this->spareParts = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getInformation(): array
@@ -119,9 +115,7 @@ abstract class Vehicle implements \JsonSerializable
 
     public function setLicensePlate(string $licensePlate): void
     {
-        $this->validator->validateCharacterCount($licensePlate, 2);
         $this->licensePlate = $licensePlate;
-        $this->validator->verifyInputFields($licensePlate);
     }
 
     public function getYearManufacture(): int
@@ -131,9 +125,7 @@ abstract class Vehicle implements \JsonSerializable
 
     public function setYearManufacture(int $yearManufacture): void
     {
-        $this->validator->validateCharacterCount($yearManufacture, 4);
         $this->yearManufacture = $yearManufacture;
-        $this->validator->verifyInputFields($yearManufacture);
     }
 
     public function getBrand(): string
@@ -143,9 +135,15 @@ abstract class Vehicle implements \JsonSerializable
 
     public function setBrand(string $brand): void
     {
-//        $this->validator->validateNamePart($brand); отключено, пока используется Faker
-        $this->validator->validateCharacterCount($brand, 3);
-        $this->validator->verifyInputFields($brand);
         $this->brand = $brand;
+    }
+
+    public function getVehicleId(): int
+    {
+        return $this->vehicleId;
+    }
+    public function jsonSerialize(): array
+    {
+        return $this->getInformation();
     }
 }

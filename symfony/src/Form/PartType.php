@@ -52,7 +52,8 @@ class PartType extends AbstractType
                 'placeholder' => 'Choose vehicles',
                 'multiple' => true, // Для выбора нескольких транспортных средств
                 'required' => true,
-                'by_reference' => false])
+                'by_reference' => false]
+            )
         ;
     }
     }

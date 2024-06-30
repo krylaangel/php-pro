@@ -28,4 +28,5 @@ enum BodyTypes: string
             self::WAGON
 ];
     }
+
 }

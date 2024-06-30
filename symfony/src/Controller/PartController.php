@@ -3,16 +3,12 @@
 namespace App\Controller;
 
 use App\CarMaster\Entity\SparePart;
-use App\CarMaster\Entity\Vehicle;
 use App\CarMaster\Manager\SparePartManager;
-use App\Form\PartFind;
 use App\Form\PartType;
 use App\Repository\SparePartRepository;
-use App\Repository\VehicleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -94,12 +90,14 @@ class PartController extends AbstractController
     ): Response {
         $sparePart = $entityManager->getRepository(SparePart::class)->find($partId);
         $originalCars = new ArrayCollection($sparePart->getVehicles()->toArray());
+
 // получаем коллекцию авто, связанных с запчастью, найденной по айди.
         foreach ($sparePart->getVehicles() as $vehicle) {
             $originalCars->add($vehicle);
         }
         $form = $this->createForm(PartType::class, $sparePart);
         $form->handleRequest($request);
+
 //удаление старых записей о автомобилях из коллекции
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($originalCars as $vehicle) {
@@ -114,14 +112,11 @@ class PartController extends AbstractController
                     $sparePart->addVehicle($vehicle);
                 }
             }
-
             $entityManager->flush();
-
 
             $this->addFlash('success', "Part {$sparePart->getNamePart()} updated successfully");
             return $this->redirectToRoute('app_part_show', ['partId' => $sparePart->getPartId()]);
         }
-
         return $this->render('parts/update.html.twig', ['part' => $sparePart, 'form' => $form]);
     }
 
