@@ -6,7 +6,6 @@ use App\CarMaster\Entity\SparePart;
 use App\CarMaster\Manager\SparePartManager;
 use App\Form\PartType;
 use App\Repository\SparePartRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,7 +18,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/parts')]
 class PartController extends AbstractController
 {
-
     #[Route('/parts', name: 'app_all_parts', methods: ['GET'])]
     public function index(
         SparePartRepository $spareParts,
@@ -86,34 +84,17 @@ class PartController extends AbstractController
     public function update(
         Request $request,
         EntityManagerInterface $entityManager,
+        SparePartManager $sparePartManager,
         int $partId
     ): Response {
         $sparePart = $entityManager->getRepository(SparePart::class)->find($partId);
-        $originalCars = new ArrayCollection($sparePart->getVehicles()->toArray());
 
-// получаем коллекцию авто, связанных с запчастью, найденной по айди.
-        foreach ($sparePart->getVehicles() as $vehicle) {
-            $originalCars->add($vehicle);
-        }
+
         $form = $this->createForm(PartType::class, $sparePart);
         $form->handleRequest($request);
 
-//удаление старых записей о автомобилях из коллекции
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($originalCars as $vehicle) {
-                if (!$sparePart->getVehicles()->contains($vehicle)) {
-                    $sparePart->removeVehicle($vehicle);
-                }
-            }
-
-            // Добавление новых автомобилей
-            foreach ($sparePart->getVehicles() as $vehicle) {
-                if (!$originalCars->contains($vehicle)) {
-                    $sparePart->addVehicle($vehicle);
-                }
-            }
-            $entityManager->flush();
-
+            $sparePartManager->updatingConnectionsWithVehicle($sparePart);
             $this->addFlash('success', "Part {$sparePart->getNamePart()} updated successfully");
             return $this->redirectToRoute('app_part_show', ['partId' => $sparePart->getPartId()]);
         }

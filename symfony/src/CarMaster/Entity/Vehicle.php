@@ -22,39 +22,47 @@ use Doctrine\ORM\Mapping\{Column,
     ManyToOne,
     OneToMany,
     Table};
+use Symfony\Component\Serializer\Attribute as Serialize;
 
 #[Entity(repositoryClass: VehicleRepository::class)]
 #[Table(name: 'vehicle')]
 #[InheritanceType('SINGLE_TABLE')]
 #[DiscriminatorColumn(name: 'type', type: 'string')]
 #[DiscriminatorMap(['Car' => Car::class])]
-abstract class Vehicle implements \JsonSerializable
+abstract class Vehicle
 
 {
     #[Id]
     #[GeneratedValue]
     #[Column(name: 'vehicle_id', type: Types::INTEGER)]
+    #[Serialize\Groups(['vehicle_list', 'vehicle_item'])]
     protected int $vehicleId;
 
     #[Column(name: 'license_plate', length: 60)]
+    #[Serialize\Groups(['vehicle_list', 'vehicle_item', 'vehicle_update'])]
     protected string $licensePlate;
 
     #[Column(name: 'year_manufacture', type: Types::INTEGER)]
+    #[Serialize\Groups(['vehicle_list', 'vehicle_item', 'vehicle_update'])]
     protected int $yearManufacture;
 
     #[Column(name: 'brand', length: 60)]
+    #[Serialize\Groups(['vehicle_list', 'vehicle_item', 'vehicle_update'])]
     protected string $brand;
 
     #[ManyToOne(targetEntity: CarOwner::class, inversedBy: 'vehicles')]
     #[JoinColumn(name: 'owner_id', referencedColumnName: 'owner_id')]
+    #[Serialize\Groups(['vehicle_list', 'vehicle_item'])]
     private CarOwner $owner;
     #[ManyToMany(targetEntity: SparePart::class, inversedBy: 'vehicles', cascade: ["persist"])]
     #[JoinTable(name: 'car_spares_parts')]
     #[JoinColumn(name: 'vehicle_id', referencedColumnName: 'vehicle_id')]
     #[InverseJoinColumn(name: 'spare_part_id', referencedColumnName: 'spare_part_id')]
+    #[Serialize\Groups(['vehicle_list', 'vehicle_item'])]
     private Collection $spareParts;
 
     #[OneToMany(targetEntity: ServiceOrder::class, mappedBy: 'vehicle', cascade: ["persist"])]
+    #[Serialize\Groups('vehicle_item')]
     protected Collection $orders;
 
     public function __construct(
@@ -88,6 +96,14 @@ abstract class Vehicle implements \JsonSerializable
     {
         $this->owner = $owner;
     }
+
+    /**
+     * @return CarOwner
+     */
+    public function getOwner(): CarOwner
+    {
+        return $this->owner;
+    }
     public function addSpareParts(SparePart $sparePart): void
     {
         if (!$this->spareParts->contains($sparePart)) {
@@ -108,6 +124,13 @@ abstract class Vehicle implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
    public function getLicensePlate(): string
     {
         return $this->licensePlate;
@@ -142,8 +165,5 @@ abstract class Vehicle implements \JsonSerializable
     {
         return $this->vehicleId;
     }
-    public function jsonSerialize(): array
-    {
-        return $this->getInformation();
-    }
+
 }

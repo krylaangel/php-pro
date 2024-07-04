@@ -13,7 +13,7 @@ class Car extends Vehicle
 
 {
     /** @var BodyTypes[] */
-    #[Column(type: 'json', options: ['jsonb' => true])]
+    #[Column(type: 'simple_array', nullable: true, enumType: BodyTypes::class)]
     private array $bodyTypes = [BodyTypes::NONE];
 
     public function __construct(
@@ -21,7 +21,7 @@ class Car extends Vehicle
         int $yearManufacture,
         string $brand,
         CarOwner $owner,
-        array $bodyTypes,
+        array $bodyTypes
 
     ) {
         parent::__construct($licensePlate, $yearManufacture, $brand, $owner);
@@ -31,7 +31,7 @@ class Car extends Vehicle
     public function getInformation(): array
     {
         $data = parent::getInformation();
-        $data['Body Type'] = implode(', ', array_column($this->bodyTypes, 'value'));
+        $data['Body Type'] = $this->getBodyType();
         return $data;
     }
 
@@ -52,10 +52,5 @@ class Car extends Vehicle
         $this->bodyTypes = $bodyTypes;
     }
 
-    public function jsonSerialize(): array
-    {
-        $data = parent::jsonSerialize();
-        $data['Body Type'] = implode(', ', array_column($this->bodyTypes, 'value'));
-        return $data;
-    }
+
 }

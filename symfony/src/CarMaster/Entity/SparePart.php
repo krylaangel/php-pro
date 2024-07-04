@@ -9,25 +9,29 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, ManyToMany, OneToMany, Table};
-use JsonSerializable;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Attribute as Serialize;
 
 #[Entity(repositoryClass: SparePartRepository::class)]
 #[Table(name: 'spare_part')]
-class SparePart implements JsonSerializable
+class SparePart
 {
     #[Id]
     #[GeneratedValue]
     #[Column(name: 'spare_part_id', type: Types::INTEGER)]
+    #[Serialize\Groups(['part_list', 'part_item'])]
+
     protected int $partId;
 
     #[Column(name: 'name_part', length: 60)]
     #[Assert\Length(min: 5, minMessage: 'Name part must be at least {{ limit }} characters long'
     )]
+    #[Serialize\Groups(['part_item'])]
     protected string $namePart;
 
     #[Column(name: 'model_part', length: 60)]
     #[Assert\Length(min: 4, minMessage: 'Model part must be at least {{ limit }} characters long')]
+    #[Serialize\Groups(['part_item'])]
     protected string $modelPart;
 
     #[Column(name: 'price_part', type: Types::FLOAT)]
@@ -138,8 +142,11 @@ class SparePart implements JsonSerializable
         return $this->partId;
     }
 
-    public function jsonSerialize(): array
+        /**
+     * @return Collection
+     */
+    public function getOrderItems(): Collection
     {
-        return $this->getPartInfo();
+        return $this->orderItems;
     }
 }

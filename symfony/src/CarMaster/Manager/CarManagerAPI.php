@@ -3,12 +3,14 @@
 namespace App\CarMaster\Manager;
 
 use App\CarMaster\DTO\CreateCar;
+use App\CarMaster\DTO\UpdateCar;
 use App\CarMaster\Entity\Car;
 use App\CarMaster\Entity\CarOwner;
 use App\CarMaster\Entity\Enum\BodyTypes;
 use App\Repository\SparePartRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use UnexpectedValueException;
 
 readonly class CarManagerAPI
 {
@@ -28,14 +30,23 @@ readonly class CarManagerAPI
         if (!$owner) {
             throw new EntityNotFoundException('Not find owner');
         }
-        $bodyTypeObjects = array_map(fn(string $bodyType) => BodyTypes::from($bodyType), $createVehicle->bodyTypes);
+        $bodyTypes = [];
+        foreach ($createVehicle->bodyTypes as $bodyType) {
+            try {
+                $bodyTypeEnum = BodyTypes::from($bodyType);
+                $bodyTypes[] = $bodyTypeEnum;
+            } catch (UnexpectedValueException $e) {
+            }
+        }
 
         $car = new Car(
             licensePlate: $createVehicle->licensePlate,
             yearManufacture: $createVehicle->yearManufacture,
             brand: $createVehicle->brand,
             owner: $owner,
-            bodyTypes: $bodyTypeObjects        );
+            bodyTypes: $bodyTypes
+        );
+
         foreach ($spareParts as $sparePart) {
             $car->addSpareParts($sparePart);
         }
@@ -43,5 +54,24 @@ readonly class CarManagerAPI
         $this->entityManager->flush();
         return $car;
     }
+
+    public function updateCar(UpdateCar $updateCar, Car $car): Car
+    {
+        if ($updateCar->licensePlate !== null) {
+            $car->setLicensePlate($updateCar->licensePlate);
+        }
+        if ($updateCar->brand !== null) {
+            $car->setBrand($updateCar->brand);
+        }
+        if ($updateCar->yearManufacture !== null) {
+            $car->setYearManufacture($updateCar->yearManufacture);
+        }
+        $this->entityManager->flush();
+
+        return $car;
+    }
+
 }
+
+
 

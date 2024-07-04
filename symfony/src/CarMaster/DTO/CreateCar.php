@@ -20,8 +20,10 @@ public string $licensePlate,
         public string $brand,
         #[Assert\Positive]
         public int $yearManufacture,
-        #[Assert\Choice(callback: [BodyTypes::class, 'toArray'], multiple: true)]
+        #[Assert\NotBlank]
+        #[Assert\Type('array')]
         public array $bodyTypes
     ) {
     }
+
 }
