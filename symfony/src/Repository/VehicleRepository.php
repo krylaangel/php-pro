@@ -11,12 +11,15 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class VehicleRepository extends ServiceEntityRepository
 {
+    private const VEHICLE_PER_PAGE = 10;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Vehicle::class);
     }
+
     /*
-        * поиск машин по номеру телефона владельца
+        * пошук машини за номером власника
         */
     public function findVehiclesByOwner(int $contactNumber): array
     {
@@ -27,8 +30,9 @@ class VehicleRepository extends ServiceEntityRepository
             ->setParameter('phone_number', $contactNumber);
         return $query->getResult();
     }
+
     /*
-     * ищем машины по запчасти
+     * пошук машин за запчастиною
      */
 
     public function getVehicleInPart(int $partId): array
@@ -41,5 +45,14 @@ class VehicleRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findPage(int $page = 1): array
+    {
+        return $this->createQueryBuilder('v')
+            ->orderBy('v.brand', 'ASC')
+            ->getQuery()
+            ->setFirstResult(($page - 1) * self::VEHICLE_PER_PAGE)
+            ->setMaxResults(self::VEHICLE_PER_PAGE)
+            ->getResult();
+    }
 }
 

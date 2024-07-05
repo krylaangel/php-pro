@@ -19,13 +19,12 @@ readonly class SparePartManager
         private EntityManagerInterface $entityManager,
         private Generator $faker,
         private SparePartRepository $sparePartRepository,
-        private VehicleRepository $vehicleRepository
     ) {
     }
 
     /*
-        * создаем новую запчасть для конкретной машины.
-        */
+    * створюємо запчастину для конкретної машини
+    */
     public function createPartByVehicle(Vehicle $vehicle): SparePart
     {
         $sparePart = new SparePart();
@@ -60,11 +59,35 @@ readonly class SparePartManager
         $this->entityManager->clear();
     }
 
+    public function updatingConnectionsWithVehicle(SparePart $sparePart): void
+    {
+        $originalCars = new ArrayCollection($sparePart->getVehicles()->toArray());
+
+        // отримуємо колекцію авто, які пов'язані з запчастиною, що була знайден за її id.
+        foreach ($sparePart->getVehicles() as $vehicle) {
+            $originalCars->add($vehicle);
+        }
+        //видалення зв'язків зі старими авто
+        foreach ($originalCars as $vehicle) {
+            if (!$sparePart->getVehicles()->contains($vehicle)) {
+                $sparePart->removeVehicle($vehicle);
+            }
+        }
+
+        // Додавання нових зв'язків з потрібними авто
+        foreach ($sparePart->getVehicles() as $vehicle) {
+            if (!$originalCars->contains($vehicle)) {
+                $sparePart->addVehicle($vehicle);
+            }
+        }
+        $this->entityManager->flush();
+
+    }
+
    public function removePartByDB(SparePart $sparePart): void
     {
         $this->entityManager->remove($sparePart);
         $this->entityManager->flush();
 
-        $this->entityManager->clear();
     }
 }

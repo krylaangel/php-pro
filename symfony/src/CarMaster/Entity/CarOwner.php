@@ -8,28 +8,38 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\{Column, Entity, GeneratedValue, Id, OneToMany, Table};
+use Symfony\Component\Serializer\Attribute as Serialize;
 
 
 #[Entity]
 #[Table(name: 'car_owner')]
-class CarOwner implements \JsonSerializable
+class CarOwner
 {
     protected Validator $validator;
 
     #[Id]
     #[GeneratedValue]
     #[Column(name: 'owner_id', type: Types::INTEGER)]
+    #[Serialize\Groups(['owner_item'])]
     protected int $ownerId;
 
     #[Column(name: 'first_name', length: 20)]
+    #[Serialize\Groups(['owner_list','owner_item'])]
     private string $firstName;
+
     #[Column(name: 'last_name', length: 20)]
+    #[Serialize\Groups(['owner_list','owner_item'])]
     private string $lastName;
+
     #[Column(name: 'password', length: 60)]
     private string $password;
+
     #[Column(name: 'email', length: 30)]
+    #[Serialize\Groups(['owner_item'])]
     private string $ownerEmail;
+
     #[Column(name: 'phone_number', type: Types::BIGINT)]
+    #[Serialize\Groups(['owner_item'])]
     private int $contactNumber;
 
     #[OneToMany(targetEntity: Vehicle::class, mappedBy: 'owner', cascade: ["persist"])]
@@ -143,8 +153,11 @@ class CarOwner implements \JsonSerializable
         $this->password = $password;
     }
 
-    public function jsonSerialize(): mixed
+    /**
+     * @return int
+     */
+    public function getOwnerId(): int
     {
-        return $this->getOwnerInfo();
+        return $this->ownerId;
     }
 }

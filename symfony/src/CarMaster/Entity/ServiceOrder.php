@@ -16,6 +16,8 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
+use Symfony\Component\Serializer\Attribute as Serialize;
+
 
 #[Entity]
 #[Table(name: 'service_order')]
@@ -27,6 +29,7 @@ class ServiceOrder implements CalculableInterface
     protected int $idOrder;
 
     #[Column(name: 'order_number', type: Types::INTEGER)]
+    #[Serialize\Groups(['order_item'])]
     private int $orderNumber;
 
     #[ManyToOne(targetEntity: Vehicle::class, inversedBy: 'orders')]
@@ -120,8 +123,8 @@ class ServiceOrder implements CalculableInterface
     }
 
     /*
-     * реализация метода интерфейса на получения Items через Collection $orderItems
-     * и преобразование в массив встроенной функцией коллекции
+     *Реалізація методу інтерфейсу для отримання елементів через Collection $orderItems
+     * та перетворення в масив вбудованою функцією колекції.
      */
     public function getItems(): array
     {

@@ -18,7 +18,7 @@ class SparePartRepository extends ServiceEntityRepository
     }
 
     /*
-     * ищем запчасти по машине
+     * шукаємо запчастини по машині
      */
     public function findPartsForCar(string $licensePlate): array
     {

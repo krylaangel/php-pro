@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class VehicleController extends AbstractController
 {
     /**
-     * Поиск машин по номеру телефона владельца
+     * Пошук машини за номером телефона її власника
      */
     #[Route('/vehicle/{contactNumber}', name: 'app_find_vehicle', methods: ['GET'])]
     public function find(
@@ -30,7 +30,7 @@ class VehicleController extends AbstractController
     }
 
     /**
-     * Создание машины по владельцу, зная его номер телефона
+     * Створення машини для її власника, пошук якого відбувається за номером його телефону
      */
     #[Route('/vehicle/create/{contactNumber}', name: 'app_create_vehicle', methods: ['GET'])]
     public function create(

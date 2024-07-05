@@ -27,16 +27,14 @@ readonly class VehicleManager
         */
     public function createVehicleByOwner(CarOwner $owner): Vehicle
     {
-        $validator = new Validator();
         $randomBodyType = $this->faker->randomElement(BodyTypes::toArray());
         $car = new Car(
             $this->faker->regexify('^([A-Z]{2}\d{4}[A-Z]{2})$'),
             $this->faker->numberBetween(1980, date('Y')),
             $this->faker->company(),
+            $owner,
             [$randomBodyType],
-            $validator
         );
-        $car->setOwner($owner);
         $this->entityManager->persist($car);
         $this->entityManager->flush();
         return $car;

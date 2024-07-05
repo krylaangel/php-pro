@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity\Enum;
 
+use ReflectionClass;
+
 enum BodyTypes: string
 {
     case NONE = 'N/A';
@@ -26,6 +28,15 @@ enum BodyTypes: string
             self::VAN,
             self::TRUCK,
             self::WAGON
-];
+        ];
+    }
+
+    public static function isValid(string $value): bool
+    {
+        $reflector = new ReflectionClass(self::class);
+        if (in_array($value, $reflector->getConstants(), true)) {
+            return true;
+        }
+        return false;
     }
 }
