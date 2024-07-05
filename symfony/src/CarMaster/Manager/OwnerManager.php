@@ -18,8 +18,8 @@ readonly class OwnerManager
     }
 
     /*
-     * создаем нового владельца
-     */
+     створюємо нового власника
+    */
 
     public function createOwner(): CarOwner
     {

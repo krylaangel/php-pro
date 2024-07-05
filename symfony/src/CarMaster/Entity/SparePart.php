@@ -51,7 +51,7 @@ class SparePart
     }
 
     /*
-     * получаем инфо о запчасти
+     * отримуємо інфо про запчастину
      */
     public function getPartInfo(): array
     {
@@ -63,7 +63,7 @@ class SparePart
     }
 
     /*
-     * взаимная связка с транспортными средствами
+     * зв'язок з машиною
      */
     public function addVehicle(Vehicle $vehicle): self
     {
@@ -86,7 +86,7 @@ class SparePart
         return $this;
     }
         /*
- * взаимная связка с таблицей OrderItem
+ * взаємозв'язок з таблицею OrderItem
  */
     public function addOrderItem(OrderItem $orderItem): void
     {

@@ -7,6 +7,7 @@ namespace App\CarMaster\Entity;
 use App\CarMaster\Entity\Enum\BodyTypes;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[Entity]
 class Car extends Vehicle
@@ -14,6 +15,7 @@ class Car extends Vehicle
 {
     /** @var BodyTypes[] */
     #[Column(type: 'simple_array', nullable: true, enumType: BodyTypes::class)]
+    #[Groups(['bodyTypes'])]
     private array $bodyTypes = [BodyTypes::NONE];
 
     public function __construct(
@@ -25,20 +27,20 @@ class Car extends Vehicle
 
     ) {
         parent::__construct($licensePlate, $yearManufacture, $brand, $owner);
-        $this->setBodyType($bodyTypes);
+        $this->setBodyTypes($bodyTypes);
     }
 
     public function getInformation(): array
     {
         $data = parent::getInformation();
-        $data['Body Type'] = $this->getBodyType();
+        $data['Body Type'] = $this->getBodyTypes();
         return $data;
     }
 
     /**
      * @return array
      */
-    public function getBodyType(): array
+    public function getBodyTypes(): array
     {
         return $this->bodyTypes;
     }
@@ -46,7 +48,7 @@ class Car extends Vehicle
     /**
      * @param array $bodyTypes
      */
-    public function setBodyType(array $bodyTypes): void
+    public function setBodyTypes(array $bodyTypes): void
     {
         array_walk($bodyTypes, fn($bodyType) => $bodyType instanceof BodyTypes);
         $this->bodyTypes = $bodyTypes;

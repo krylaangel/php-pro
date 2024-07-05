@@ -30,7 +30,6 @@ class ServiceOrder implements CalculableInterface
 
     #[Column(name: 'order_number', type: Types::INTEGER)]
     #[Serialize\Groups(['order_item'])]
-
     private int $orderNumber;
 
     #[ManyToOne(targetEntity: Vehicle::class, inversedBy: 'orders')]
@@ -124,8 +123,8 @@ class ServiceOrder implements CalculableInterface
     }
 
     /*
-     * реализация метода интерфейса на получения Items через Collection $orderItems
-     * и преобразование в массив встроенной функцией коллекции
+     *Реалізація методу інтерфейсу для отримання елементів через Collection $orderItems
+     * та перетворення в масив вбудованою функцією колекції.
      */
     public function getItems(): array
     {

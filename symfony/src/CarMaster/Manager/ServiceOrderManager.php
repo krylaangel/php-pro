@@ -22,7 +22,8 @@ readonly class ServiceOrderManager
     }
 
     /*
-     * создаем новый ордер под определенную машину
+     *      * створюємо новий ордер під конкретну машину
+
      */
 
     public function createOrder(Vehicle $vehicle): ServiceOrder
@@ -37,7 +38,7 @@ readonly class ServiceOrderManager
     }
 
     /*
-     * наполняем его деталями, суммирую количество однотипных через функцию updateOrderQuantities
+     * Заповнюємо його деталями, сумуючи кількість однотипних через функцію updateOrderQuantities.
      */
 
     public function addOrder(ServiceOrder $serviceOrder, SparePart $sparePart, int $quantity): ServiceOrder

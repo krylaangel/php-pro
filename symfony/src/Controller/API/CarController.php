@@ -45,7 +45,7 @@ class CarController extends AbstractController
             $serializer->serialize(
                 $car, 'json',
                 [
-                    'groups' => ['vehicle_item', 'owner_item', 'owner_list', 'order_item', 'part_list', 'part_item'],
+                    'groups' => ['bodyTypes', 'vehicle_item', 'owner_item', 'owner_list', 'order_item', 'part_list', 'part_item'],
                 ]
             )
         );

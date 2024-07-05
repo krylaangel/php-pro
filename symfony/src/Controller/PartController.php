@@ -41,7 +41,7 @@ class PartController extends AbstractController
     }
 
     /**
-     * удалить запчасть
+     * видалити запчастину
      */
     #[Route('/{partId}/_delete', name: 'app_part_delete', requirements: ['partId' => '\d+'])]
     public function delete(SparePartManager $sparePartManager, SparePart $sparePart): Response
@@ -52,7 +52,7 @@ class PartController extends AbstractController
     }
 
     /**
-     * создать запчасть
+     * створити запчастину
      */
     #[Route('/_create', name: 'app_create_part', methods: ['GET', 'POST'])]
     public function create(
@@ -75,7 +75,7 @@ class PartController extends AbstractController
     }
 
     /**
-     * изменить запчасть
+     * змінити запчастину
      */
     #[Route('/{partId}/_update', name: 'app_update_part', requirements: ['partId' => '\d+'], methods: [
         'GET',
@@ -102,7 +102,7 @@ class PartController extends AbstractController
     }
 
     /**
-     * Поиск запчастей для конкретной машины по номеру лицензии
+     * Пошук запчастини під конкретну машину за номером її (машини) ліцензії
      */
     public function find(
         string $licensePlate,

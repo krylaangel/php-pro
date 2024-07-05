@@ -19,7 +19,7 @@ class VehicleRepository extends ServiceEntityRepository
     }
 
     /*
-        * поиск машин по номеру телефона владельца
+        * пошук машини за номером власника
         */
     public function findVehiclesByOwner(int $contactNumber): array
     {
@@ -32,7 +32,7 @@ class VehicleRepository extends ServiceEntityRepository
     }
 
     /*
-     * ищем машины по запчасти
+     * пошук машин за запчастиною
      */
 
     public function getVehicleInPart(int $partId): array

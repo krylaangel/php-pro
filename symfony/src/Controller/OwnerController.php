@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class OwnerController extends AbstractController
 {
     /*
-    * поиск владельца по айди
+    * пошук власника за його Id
     */
     #[Route('/owner/{ownerId}', name: 'app_owner', methods: ['GET'])]
     public function find(int $ownerId, EntityManagerInterface $entityManager): Response
@@ -29,7 +29,7 @@ class OwnerController extends AbstractController
     }
 
     /*
-    * создаем нового владельца
+    * створення нового власника
     */
 
     #[Route('/owner/create/{ownerId}', name: 'app_owner_create', methods: ['GET'])]

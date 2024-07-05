@@ -23,8 +23,8 @@ readonly class SparePartManager
     }
 
     /*
-        * создаем новую запчасть для конкретной машины.
-        */
+    * створюємо запчастину для конкретної машини
+    */
     public function createPartByVehicle(Vehicle $vehicle): SparePart
     {
         $sparePart = new SparePart();
@@ -63,18 +63,18 @@ readonly class SparePartManager
     {
         $originalCars = new ArrayCollection($sparePart->getVehicles()->toArray());
 
-        // получаем коллекцию авто, связанных с запчастью, найденной по айди.
+        // отримуємо колекцію авто, які пов'язані з запчастиною, що була знайден за її id.
         foreach ($sparePart->getVehicles() as $vehicle) {
             $originalCars->add($vehicle);
         }
-        //удаление старых записей о автомобилях из коллекции
+        //видалення зв'язків зі старими авто
         foreach ($originalCars as $vehicle) {
             if (!$sparePart->getVehicles()->contains($vehicle)) {
                 $sparePart->removeVehicle($vehicle);
             }
         }
 
-        // Добавление новых автомобилей
+        // Додавання нових зв'язків з потрібними авто
         foreach ($sparePart->getVehicles() as $vehicle) {
             if (!$originalCars->contains($vehicle)) {
                 $sparePart->addVehicle($vehicle);
