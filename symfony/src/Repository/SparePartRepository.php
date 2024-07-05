@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -9,6 +10,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class SparePartRepository extends ServiceEntityRepository
 {
+    private const PARTS_PER_PAGE = 10;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, SparePart::class);
@@ -25,6 +28,16 @@ class SparePartRepository extends ServiceEntityRepository
         $query = $queryBuilder->getQuery()
             ->setParameter('license_plate', $licensePlate);
         return $query->getResult();
+    }
+
+    public function findPage(int $page = 1)
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.partId')
+            ->getQuery()
+            ->setFirstResult(self::PARTS_PER_PAGE * $page - self::PARTS_PER_PAGE)
+            ->setMaxResults(self::PARTS_PER_PAGE)
+            ->getResult();
+    }
 
     }
-}

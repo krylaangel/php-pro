@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity;
 
+use App\CarMaster\Entity\Enum\BodyTypes;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
@@ -11,8 +12,10 @@ use Doctrine\ORM\Mapping\Entity;
 class Car extends Vehicle
 
 {
-    #[Column(name: 'body_type', length: 60)]
-    protected string $bodyType;
+    /** @var BodyTypes[] */
+    #[Column(type: 'simple_array', enumType: BodyTypes::class)]
+    private array $bodyTypes = [BodyTypes::NONE];
+
     protected array $spareParts = [];
 
 
@@ -20,30 +23,36 @@ class Car extends Vehicle
         string $licensePlate,
         int $yearManufacture,
         string $brand,
-        string $bodyType,
+        array $bodyTypes,
         Validator $validator
 
     ) {
-        parent::__construct($licensePlate, $yearManufacture, $brand, $validator, $bodyType);
-        $this->setBodyType($bodyType);
+        parent::__construct($licensePlate, $yearManufacture, $brand, $validator);
+        $this->setBodyType($bodyTypes);
     }
 
     public function getInformation(): array
     {
         $data = parent::getInformation();
-        $data['Body Type'] = $this->getBodyType();
+        $data['Body Type'] = implode(', ', array_column($this->bodyTypes, 'value'));
         return $data;
     }
 
-    public function getBodyType(): string
+    /**
+     * @return array
+     */
+    public function getBodyType(): array
     {
-        return $this->bodyType;
+        return $this->bodyTypes;
     }
 
-    public function setBodyType(string $bodyType): void
+    /**
+     * @param array $bodyTypes
+     */
+    public function setBodyType(array $bodyTypes): void
     {
-        $this->bodyType = $bodyType;
-        $this->validator->verifyInputFields($bodyType);
+        array_walk($bodyTypes, fn($bodyType) => $bodyType instanceof BodyTypes);
+        $this->bodyTypes = $bodyTypes;
     }
 
     public function jsonSerialize(): array
