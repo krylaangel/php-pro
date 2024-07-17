@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Entity;
 
+use App\CarMaster\Entity\Enum\VehicleType;
 use App\Repository\VehicleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -28,7 +29,7 @@ use Symfony\Component\Serializer\Attribute as Serialize;
 #[Table(name: 'vehicle')]
 #[InheritanceType('SINGLE_TABLE')]
 #[DiscriminatorColumn(name: 'type', type: 'string')]
-#[DiscriminatorMap(['Car' => Car::class])]
+#[DiscriminatorMap(VehicleType::ENTITY_MAP)]
 abstract class Vehicle
 
 {
@@ -65,16 +66,7 @@ abstract class Vehicle
     #[Serialize\Groups('vehicle_item')]
     protected Collection $orders;
 
-    public function __construct(
-        string $licensePlate,
-        int $yearManufacture,
-        string $brand,
-        CarOwner $owner
-    ) {
-        $this->setLicensePlate($licensePlate);
-        $this->setYearManufacture($yearManufacture);
-        $this->setBrand($brand);
-        $this->owner = $owner;
+    public function __construct() {
         $this->spareParts = new ArrayCollection();
         $this->orders = new ArrayCollection();
     }
@@ -86,6 +78,10 @@ abstract class Vehicle
             'Year of Manufacture' => $this->getYearManufacture(),
             'Brand' => $this->getBrand()
         ];
+    }
+    public function getType(): string
+    {
+return array_flip(VehicleType::ENTITY_MAP)[get_called_class()];
     }
 
     public function setOwner(CarOwner $owner): void
@@ -111,7 +107,7 @@ abstract class Vehicle
     {
         return $this->spareParts;
     }
-    public function removeSparePart(SparePart $sparePart): self
+    public function removeSpareParts(SparePart $sparePart): self
     {
         if ($this->spareParts->removeElement($sparePart)) {
             $sparePart->removeVehicle($this);

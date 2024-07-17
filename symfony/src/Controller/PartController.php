@@ -8,7 +8,6 @@ use App\Form\PartType;
 use App\Repository\SparePartRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -18,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/parts')]
 class PartController extends AbstractController
 {
-    #[Route('/parts', name: 'app_all_parts', methods: ['GET'])]
+    #[Route('/', name: 'app_all_parts', methods: ['GET'])]
     public function index(
         SparePartRepository $spareParts,
         #[MapQueryParameter(
@@ -101,19 +100,4 @@ class PartController extends AbstractController
         return $this->render('parts/update.html.twig', ['part' => $sparePart, 'form' => $form]);
     }
 
-    /**
-     * Пошук запчастини під конкретну машину за номером її (машини) ліцензії
-     */
-    public function find(
-        string $licensePlate,
-        SparePartManager $sparePartManager
-    ): Response {
-        $parts = $sparePartManager->getFindPartsForCar($licensePlate);
-        if (!empty($parts)) {
-            return new JsonResponse($parts);
-        }
-        return new JsonResponse([
-            'error' => 'Part not found'
-        ], Response::HTTP_NOT_FOUND);
     }
-}

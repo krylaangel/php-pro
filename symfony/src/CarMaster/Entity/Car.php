@@ -18,16 +18,8 @@ class Car extends Vehicle
     #[Groups(['bodyTypes'])]
     private array $bodyTypes = [BodyTypes::NONE];
 
-    public function __construct(
-        string $licensePlate,
-        int $yearManufacture,
-        string $brand,
-        CarOwner $owner,
-        array $bodyTypes
-
-    ) {
-        parent::__construct($licensePlate, $yearManufacture, $brand, $owner);
-        $this->setBodyTypes($bodyTypes);
+    public function __construct() {
+        parent::__construct();
     }
 
     public function getInformation(): array

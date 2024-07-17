@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\CarMaster\Manager;
 
-use App\Repository\VehicleRepository;
 use App\CarMaster\Entity\SparePart;
 use App\CarMaster\Entity\Vehicle;
 use App\Repository\SparePartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator;
-use phpDocumentor\Reflection\Types\Collection;
 
 readonly class SparePartManager
 {
@@ -30,7 +28,7 @@ readonly class SparePartManager
         $sparePart = new SparePart();
         $sparePart->setNamePart($this->faker->word);
         $sparePart->setModelPart($this->faker->company);
-        $sparePart->setPricePart($this->faker->randomFloat());;
+        $sparePart->setPricePart($this->faker->randomFloat());
 
         $sparePart->addVehicle($vehicle);
         $this->entityManager->persist($sparePart);

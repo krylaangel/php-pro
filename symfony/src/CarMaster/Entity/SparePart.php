@@ -56,9 +56,10 @@ class SparePart
     public function getPartInfo(): array
     {
         return [
-            'Name Part' => $this->getNamePart(),
-            'Model Part' => $this->getModelPart(),
-            'Price Part' => $this->getPricePart()
+            'partId' => $this->getPartId(),
+            'namePart' => $this->getNamePart(),
+            'modelPart' => $this->getModelPart(),
+            'pricePart' => $this->getPricePart()
         ];
     }
 
@@ -81,7 +82,7 @@ class SparePart
 
     public function removeVehicle(Vehicle $vehicle): self
     {$this->vehicles->removeElement($vehicle);
-        $vehicle->removeSparePart($this);
+        $vehicle->removeSpareParts($this);
 
         return $this;
     }
