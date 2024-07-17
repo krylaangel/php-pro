@@ -16,7 +16,7 @@
 </head>
 <body>
 <nav class="navbar">
-    <div class="pure-menu pure-menu-horizontal car_master-menu">
+    <div class="pure-menu pure-menu-horizontal">
         <a href="{{ path('app_home') }}" class="pure-menu-link pure-menu-heading">&#8962; Car master</a>
         <ul class="pure-menu-list">
             <li class="pure-menu-item dropdown pure-menu-allow-hover">
@@ -24,14 +24,45 @@
                 <div class="dropdown__content">
                     <a href="{{ path('app_create_part') }}" class="pure-menu-link">Add spare part</a>
                     <a href=" {{ path('app_all_parts') }}" class="pure-menu-link">All spare part</a>
+
+                </div>
+            </li>
+        </ul>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item dropdown pure-menu-allow-hover">
+                <a href="{{ path('app_home') }}" class="pure-menu-link">Vehicles</a>
+                <div class="dropdown__content">
+                    <a href=" {{ path('app_all_vehicles') }}" class="pure-menu-link">All vehicles</a>
+                    <a href=" {{ path('app_find_part_for_vehicles') }}" class="pure-menu-link">Find part from
+                        vehicle</a>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item dropdown pure-menu-allow-hover">
+                <a href="#" class="pure-menu-link">Add vehicles</a>
+                <div class="dropdown__content">
+                    {% for vehicleType in vehicle_types() %}
+                        <a href="{{ path('app_create_vehicle', {vehicleType: vehicleType}) }}"
+                           class="pure-menu-link">{{ vehicleType }}</a>
+                    {% endfor %}
+                </div>
+            </li>
+        </ul>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item dropdown pure-menu-allow-hover">
+                <a href="{{ path('app_home') }}" class="pure-menu-link">Owner</a>
+                <div class="dropdown__content">
+                    {#                    <a href="{{ path('app_create_vehicles') }}" class="pure-menu-link">Add owner</a> #}
+                    {#                <a href=" {{ path('app_all_app_vehicles') }}" class="pure-menu-link">All owner</a> #}
+                    <a href=" {{ path('app_find_vehicle_for_owner') }}" class="pure-menu-link">Find vehicle by owner</a>
                 </div>
             </li>
         </ul>
         <li class="pure-menu-item">
-            <a href="{{ path('app_home') }}" class="pure-menu-link">Vehicles</a>
-        </li>
-        <li class="pure-menu-item">
-            <a href="{{ path('app_home') }}" class="pure-menu-link">Owner</a>
+            <a href="/logout" class="pure-menu-link">Log out</a>
         </li>
     </div>
 </nav>

@@ -7,7 +7,7 @@ namespace App\CarMaster\Manager;
 use App\CarMaster\Entity\Car;
 use App\CarMaster\Entity\CarOwner;
 use App\CarMaster\Entity\Enum\BodyTypes;
-use App\CarMaster\Entity\Validator;
+use App\CarMaster\Entity\SparePart;
 use App\CarMaster\Entity\Vehicle;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,5 +49,11 @@ readonly class VehicleManager
             $result [] = $vehicleInfo;
         }
         return $result;
+    }
+    public function removeVehicleByDB(Vehicle $vehicle): void
+    {
+        $this->entityManager->remove($vehicle);
+        $this->entityManager->flush();
+
     }
 }

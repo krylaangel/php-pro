@@ -7,9 +7,7 @@ namespace App\CarMaster\Manager;
 use App\CarMaster\Entity\ServiceOrder;
 use App\CarMaster\Entity\SparePart;
 use App\CarMaster\Entity\Vehicle;
-use App\CarMaster\Service\CostCalculatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityNotFoundException;
 use Faker\Generator;
 
 readonly class ServiceOrderManager
@@ -22,8 +20,7 @@ readonly class ServiceOrderManager
     }
 
     /*
-     *      * створюємо новий ордер під конкретну машину
-
+     * створюємо новий ордер під конкретну машину
      */
 
     public function createOrder(Vehicle $vehicle): ServiceOrder

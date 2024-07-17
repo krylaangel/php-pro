@@ -24,11 +24,11 @@ class CarOwner
     protected int $ownerId;
 
     #[Column(name: 'first_name', length: 20)]
-    #[Serialize\Groups(['owner_list','owner_item'])]
+    #[Serialize\Groups(['owner_list', 'owner_item'])]
     private string $firstName;
 
     #[Column(name: 'last_name', length: 20)]
-    #[Serialize\Groups(['owner_list','owner_item'])]
+    #[Serialize\Groups(['owner_list', 'owner_item'])]
     private string $lastName;
 
     #[Column(name: 'password', length: 60)]
@@ -43,7 +43,7 @@ class CarOwner
     private int $contactNumber;
 
     #[OneToMany(targetEntity: Vehicle::class, mappedBy: 'owner', cascade: ["persist"])]
-    protected Collection $vehicleInfo;
+    protected Collection $vehicles;
 
 
     public function __construct(
@@ -55,7 +55,7 @@ class CarOwner
         Validator $validator
     ) {
         $this->validator = $validator;
-        $this->vehicleInfo = new ArrayCollection();
+        $this->vehicles = new ArrayCollection();
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
         $this->setPassword($password);
@@ -73,15 +73,19 @@ class CarOwner
             'Password' => $this->getPassword()
         ];
     }
-
-    public function addVehicle(Vehicle $vehicleInfo): void
+public function getFullName(): string
+{
+    return $this->firstName . ' ' . $this-> lastName;
+}
+    public function setVehicles(Vehicle $vehicles): void
     {
-        $this->vehicleInfo[] = $vehicleInfo;
+        $this->vehicles[] = $vehicles;
+        $vehicles->setOwner($this);
+
     }
-
-    public function getVehicleInfo(): ArrayCollection|Collection
+    public function getVehicles(): Collection
     {
-        return $this->vehicleInfo;
+        return $this->vehicles;
     }
 
     /**
