@@ -8,12 +8,18 @@ FROM php:8.3-fpm as php-dev
 RUN apt-get update && apt-get install -y \
     git \
     zip \
-    unzip
+    unzip\
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev
 
 # Installs PHP extensions
 RUN docker-php-ext-install \
+    gd \
     pdo_mysql \
-    opcache
+    opcache \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ARG COMPOSER_VERSION=2.7.2

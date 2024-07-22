@@ -50,6 +50,7 @@ class VehicleRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('v')
             ->orderBy('v.brand', 'ASC')
             ->getQuery()
+//            ->enableResultCache(60)
             ->setFirstResult(($page - 1) * self::VEHICLE_PER_PAGE)
             ->setMaxResults(self::VEHICLE_PER_PAGE)
             ->getResult();

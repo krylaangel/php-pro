@@ -28,13 +28,12 @@ readonly class VehicleManager
     public function createVehicleByOwner(CarOwner $owner): Vehicle
     {
         $randomBodyType = $this->faker->randomElement(BodyTypes::toArray());
-        $car = new Car(
-            $this->faker->regexify('^([A-Z]{2}\d{4}[A-Z]{2})$'),
-            $this->faker->numberBetween(1980, date('Y')),
-            $this->faker->company(),
-            $owner,
-            [$randomBodyType],
-        );
+        $car = new Car();
+        $car->setOwner($owner);
+        $car->setBrand($this->faker->company());
+        $car->setYearManufacture($this->faker->numberBetween(1980, date('Y')));
+        $car->setLicensePlate($this->faker->regexify('^([A-Z]{2}\d{4}[A-Z]{2})$'));
+        $car->setBodyTypes([$randomBodyType]);
         $this->entityManager->persist($car);
         $this->entityManager->flush();
         return $car;
@@ -50,10 +49,10 @@ readonly class VehicleManager
         }
         return $result;
     }
+
     public function removeVehicleByDB(Vehicle $vehicle): void
     {
         $this->entityManager->remove($vehicle);
         $this->entityManager->flush();
-
     }
 }

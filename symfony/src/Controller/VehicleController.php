@@ -2,18 +2,17 @@
 
 namespace App\Controller;
 
-use App\CarMaster\Entity\CarOwner;
 use App\CarMaster\Entity\Enum\VehicleType;
 use App\CarMaster\Entity\Vehicle;
+use App\CarMaster\Manager\CacheManager;
 use App\CarMaster\Manager\SparePartManager;
 use App\CarMaster\Manager\VehicleManager;
 use App\Form\FindPartType;
 use App\Form\VehicleForm;
 use App\Repository\VehicleRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\DocBlock\Tags\Method;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -74,9 +73,10 @@ class VehicleController extends AbstractController
     public function find(
         Request $request,
         SparePartManager $sparePartManager,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        CacheManager $cache
     ): Response {
-        $form = $this->createForm(FindPartType::class, null, options: ['method' => 'GET']);
+        $form = $this->createForm(FindPartType::class, options: ['method' => 'GET']);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
@@ -87,6 +87,7 @@ class VehicleController extends AbstractController
             } else {
                 $value = $vehicle->getLicensePlate();
                 $spareParts = $sparePartManager->getFindPartsForCar($value);
+                $cache->saveCache($spareParts, $value);
 
                 if (!$spareParts) {
                     $this->addFlash('error', "Parts not found");
@@ -103,23 +104,4 @@ class VehicleController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-//
-//    /**
-//     * Створення машини для її власника, пошук якого відбувається за номером його телефону
-//     */
-//    #[Route('/vehicle/create/{contactNumber}', name: 'app_create_vehicle', methods: ['GET'])]
-//    public function create(
-//        int $contactNumber,
-//        EntityManagerInterface $entityManager,
-//        VehicleManager $vehicleManager
-//    ): Response {
-//        $owner = $entityManager->getRepository(CarOwner::class)->findOneBy(['contactNumber' => $contactNumber]);
-//        if (!empty($owner)) {
-//            return new JsonResponse($vehicleManager->createVehicleByOwner($owner)->getInformation());
-//        }
-//        return new JsonResponse([
-//            'error' => 'Number not found',
-//        ], Response::HTTP_NOT_FOUND);
-//    }
 }
