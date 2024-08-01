@@ -39,13 +39,13 @@ readonly class CarManagerAPI
             }
         }
 
-        $car = new Car(
-            licensePlate: $createVehicle->licensePlate,
-            yearManufacture: $createVehicle->yearManufacture,
-            brand: $createVehicle->brand,
-            owner: $owner,
-            bodyTypes: $bodyTypes
-        );
+        $car = new Car();
+        $car->setLicensePlate($createVehicle->licensePlate);
+        $car->setYearManufacture($createVehicle->yearManufacture);
+        $car->setBrand($createVehicle->brand);
+        $car->setOwner($owner);
+        $car->setBodyTypes($bodyTypes);
+
 
         foreach ($spareParts as $sparePart) {
             $car->addSpareParts($sparePart);

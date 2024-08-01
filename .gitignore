@@ -5,3 +5,4 @@ export/
 /log
 .env
 command/
+sql/

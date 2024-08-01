@@ -35,6 +35,7 @@ class SparePartRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->orderBy('s.partId')
             ->getQuery()
+//            ->enableResultCache(60)
             ->setFirstResult(self::PARTS_PER_PAGE * $page - self::PARTS_PER_PAGE)
             ->setMaxResults(self::PARTS_PER_PAGE)
             ->getResult();

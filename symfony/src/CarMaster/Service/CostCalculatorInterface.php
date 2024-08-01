@@ -2,7 +2,6 @@
 
 namespace App\CarMaster\Service;
 
-use App\CarMaster\Entity\ServiceOrder;
 
 interface CostCalculatorInterface
 {

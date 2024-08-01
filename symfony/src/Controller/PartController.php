@@ -7,6 +7,7 @@ use App\CarMaster\Manager\SparePartManager;
 use App\Form\PartType;
 use App\Repository\SparePartRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +58,7 @@ class PartController extends AbstractController
     public function create(
         Request $request,
         SparePartManager $sparePartManager,
+        CacheItemPoolInterface $cache
     ): Response {
         $sparePart = new SparePart();
         $form = $this->createForm(PartType::class, $sparePart);
@@ -64,7 +66,11 @@ class PartController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sparePartManager->connectionWithVehicle($sparePart);
-
+            $partItems = $cache->getItem('part.search.keys.');
+            if ($keys = $partItems->get()) {
+                $cache->deleteItems($keys);
+                $cache->deleteItem($partItems->getKey());
+            }
             $this->addFlash('success', "Part {$sparePart->getNamePart()} created successfully");
             return $this->redirectToRoute('app_part_show', ['partId' => $sparePart->getPartId()]);
         }
@@ -100,4 +106,4 @@ class PartController extends AbstractController
         return $this->render('parts/update.html.twig', ['part' => $sparePart, 'form' => $form]);
     }
 
-    }
+}

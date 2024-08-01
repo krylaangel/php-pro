@@ -40,5 +40,12 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - mysql-data:/var/lib/mysql
+
+  redis:
+    image: redis:latest
+    volumes:
+      - redis:/data
+
 volumes:
   mysql-data:
+  redis:
